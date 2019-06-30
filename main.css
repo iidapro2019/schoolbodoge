@@ -1,0 +1,41 @@
+body{
+	margin: 0;
+}
+
+ul.nav {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #1b2538;
+}
+li {
+	float: left;
+	border-right: 1px solid #bbbbbb;
+}
+li:last-child {
+	border-right: none;
+}
+li a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+li a:hover {
+	background-color: #aaaaaa;
+}
+li.game{
+    background-color: #aa0000;
+    float: right;
+}
+
+li.game a:hover {
+    background-color: #dd0000;
+}
+
+#content{
+    margin: 10px 40px 10px 40px;
+    padding: 10px;
+}
