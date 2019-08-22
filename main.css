@@ -39,3 +39,7 @@ li.game a:hover {
     margin: 10px 40px 10px 40px;
     padding: 10px;
 }
+
+img{
+	width: 100%;
+}
