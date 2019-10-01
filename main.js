@@ -1,10 +1,10 @@
 enchant();
 
 window.onload = function(){
-    var core = new Core(320, 320);
+    var core = new Core(500, 320);
     var turn = 0;
     core.preload('chara1.png');
-    var playerList = [
+    var characterList = [
         {
             name: '春原 歌呼'
         },
@@ -21,6 +21,7 @@ window.onload = function(){
     var oni  = {
         name: '鬼'
     }
+    var playerList = [oni];
     core.fps = 15;
     core.onload = function(){
 
@@ -42,15 +43,25 @@ window.onload = function(){
             var captionLabel = new Label();
             scene.addChild(captionLabel);
             captionLabel.text = 'キャラ選択'
-            for(let i = 0; i < playerList.length; i++){
-                var playerLabel = new Label();
+            for(let i = 0; i < characterList.length; i++){
+                let playerLabel = new Label();
                 scene.addChild(playerLabel);
-                playerLabel.text = playerList[i].name;
-                playerLabel.x = 80*(i%2);
+                playerLabel.text = characterList[i].name;
+                playerLabel.x = 80*(i%2)+20;
                 playerLabel.y = 30*(Math.floor(i/2)+1);
-                scene.addChild(playerLabel);
-            }
+                $(playerLabel).one('touchstart', function(){
+                    playerList.push(characterList[i]);
+                    playerLabel.text = playerList.length+playerLabel.text
+                });
+            };
             scene.on('touchstart', function(){
+                console.log(playerList);
+            });
+            var nextLabel = new Label();
+            scene.addChild(nextLabel);
+            nextLabel.text = '次へ'
+            nextLabel.x = 260;
+            nextLabel.on('touchstart', function(){
                 core.replaceScene(createDemonPhaseScene());
             });
             return scene;
@@ -62,7 +73,12 @@ window.onload = function(){
             var captionLabel = new Label();
             scene.addChild(captionLabel);
             captionLabel.text = '鬼フェーズ：'+turn+'ターン目';
-            scene.addEventListener('touchstart', function(){
+            
+            var nextLabel = new Label();
+            scene.addChild(nextLabel);
+            nextLabel.text = '生徒フェーズへ'
+            nextLabel.x = 240;
+            nextLabel.on('touchstart', function(){
                 core.replaceScene(createStudentPhaseScene());
             });
             return scene;
@@ -73,7 +89,12 @@ window.onload = function(){
             var captionLabel = new Label();
             scene.addChild(captionLabel);
             captionLabel.text = '生徒フェーズ：'+turn+'ターン目';
-            scene.addEventListener('touchstart', function(){
+
+            var nextLabel = new Label();
+            scene.addChild(nextLabel);
+            nextLabel.text = '鬼フェーズへ'
+            nextLabel.x = 240;
+            nextLabel.on('touchstart', function(){
                 core.replaceScene(createDemonPhaseScene());
             });
             return scene;
