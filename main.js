@@ -4,6 +4,23 @@ window.onload = function(){
     var core = new Core(320, 320);
     var turn = 0;
     core.preload('chara1.png');
+    var playerList = [
+        {
+            name: '春原 歌呼'
+        },
+        {
+            name: '夏山 鈴莉'
+        },
+        {
+            name: '柳瀬 秋太'
+        },
+        {
+            name: '久遠 冬夜'
+        },
+    ];
+    var oni  = {
+        name: '鬼'
+    }
     core.fps = 15;
     core.onload = function(){
 
@@ -25,11 +42,20 @@ window.onload = function(){
             var captionLabel = new Label();
             scene.addChild(captionLabel);
             captionLabel.text = 'キャラ選択'
+            for(let i = 0; i < playerList.length; i++){
+                var playerLabel = new Label();
+                scene.addChild(playerLabel);
+                playerLabel.text = playerList[i].name;
+                playerLabel.x = 80*(i%2);
+                playerLabel.y = 30*(Math.floor(i/2)+1);
+                scene.addChild(playerLabel);
+            }
             scene.on('touchstart', function(){
                 core.replaceScene(createDemonPhaseScene());
             });
             return scene;
         };
+
         var createDemonPhaseScene = function(){
             turn++;
             var scene = new Scene();
