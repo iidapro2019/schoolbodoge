@@ -1,0 +1,105 @@
+{
+    "mapName": "廃校",
+    "mapData": [
+        {
+            "pos_x": 0,
+            "pos_y": 0,
+            "floor": 1
+        },
+        {
+            "pos_x": 30,
+            "pos_y": 0,
+            "floor": 1
+        },
+        {
+            "pos_x": 60,
+            "pos_y": 0,
+            "floor": 1
+        },
+        {
+            "pos_x": 90,
+            "pos_y": 0,
+            "floor": 1
+        },
+        {
+            "pos_x": 120,
+            "pos_y": 0,
+            "floor": 1
+        },
+        {
+            "pos_x": 0,
+            "pos_y": 30,
+            "floor": 1
+        },
+        {
+            "pos_x": 30,
+            "pos_y": 30,
+            "floor": 1
+        },
+        {
+            "pos_x": 60,
+            "pos_y": 30,
+            "floor": 1
+        },
+        {
+            "pos_x": 90,
+            "pos_y": 30,
+            "floor": 1
+        },
+        {
+            "pos_x": 120,
+            "pos_y": 30,
+            "floor": 1
+        },
+        {
+            "pos_x": 0,
+            "pos_y": 0,
+            "floor": 2
+        },
+        {
+            "pos_x": 30,
+            "pos_y": 0,
+            "floor": 2
+        },
+        {
+            "pos_x": 60,
+            "pos_y": 0,
+            "floor": 2
+        },
+        {
+            "pos_x": 90,
+            "pos_y": 0,
+            "floor": 2
+        },
+        {
+            "pos_x": 120,
+            "pos_y": 0,
+            "floor": 2
+        },
+        {
+            "pos_x": 0,
+            "pos_y": 30,
+            "floor": 2
+        },
+        {
+            "pos_x": 30,
+            "pos_y": 30,
+            "floor": 2
+        },
+        {
+            "pos_x": 60,
+            "pos_y": 30,
+            "floor": 2
+        },
+        {
+            "pos_x": 90,
+            "pos_y": 30,
+            "floor": 2
+        },
+        {
+            "pos_x": 120,
+            "pos_y": 30,
+            "floor": 2
+        }
+    ]
+}
