@@ -1,7 +1,7 @@
 enchant();
 
 window.onload = function(){
-    var core = new Core(1000, 600);
+    var core = new Core(800, 1000);
     var turn = 0;
     core.preload('chara1.png');
  
@@ -26,6 +26,14 @@ window.onload = function(){
     var playerList = [demon];
     var movingCharacter = demon;
     core.fps = 15;
+    var left = ( window.innerWidth - ( core.width * core.scale ) ) / 2;
+    $('#enchant-stage').css({
+        "position":"absolute",
+        "left":left+"px",
+        "top":"80px",
+    });
+    core._pageY = 80;
+    core._pageX = left;
     core.onload = function(){
         core.keybind(49, 'one');
         core.keybind(50, 'two');
@@ -44,11 +52,12 @@ window.onload = function(){
         $.getJSON("map.json" , function(mapJson) {
             console.log(mapJson);
             $.each(mapJson["mapData"], function(index, data){
-                var sprite = new Sprite(30, 30);
+                console.log(data);
+                var sprite = new Sprite(data.room_width, data.room_height);
                 sprite.x = data.pos_x+50
-                sprite.y = data.pos_y+80*data.floor
+                sprite.y = data.pos_y+300*(data.floor-1)+80
                 // Surfaceオブジェクトを生成しスプライトに連結
-                var surface = new Surface( 30, 30);
+                var surface = new Surface( data.room_width, data.room_height);
                 sprite.image = surface;
                 sprite.on('touchstart', function(){
                     movingCharacter.location = sprite;
@@ -57,17 +66,19 @@ window.onload = function(){
                     console.log(movingCharacter.name+"は(x:"+sprite.x+", y:"+sprite.y+")に移動した")
                 });
                 map.addChild(sprite);
-                surface.context.strokeRect (0, 0, 30, 30);
+                surface.context.strokeRect (0, 0, data.room_width, data.room_height);
             });
         });
         
 
         var createTitleScene = function(){
             var scene = new Scene();
+            scene.backgroundColor = '#999999'; 
             var label = new Label();
-            label.x = 500;
-            label.y = 300;
+            label.x = 350;
+            label.y = 250;
             label.text = 'みている';
+            label.font = "40px Palatino"
             scene.addChild(label);
             scene.on('touchstart', function(){
                 core.replaceScene(createSelectScene());
@@ -77,6 +88,7 @@ window.onload = function(){
 
         var createSelectScene = function(){
             var scene = new Scene();
+            scene.backgroundColor = '#999999'; 
             var captionLabel = new Label();
             scene.addChild(captionLabel);
             captionLabel.text = 'キャラ選択'
@@ -95,19 +107,21 @@ window.onload = function(){
                 });
             };
             // scene.addChild(characterList[3].sp);
-            scene.on('touchstart', function(){
-                console.log(playerList);
-            });
+            // scene.on('touchstart', function(){
+            //     console.log(playerList);
+            // });
             var nextLabel = new Label();
             scene.addChild(nextLabel);
             nextLabel.text = '次へ'
             nextLabel.x = 650;
             nextLabel.on('touchstart', function(){
-                for(let i = 0; i < playerList.length; i++){
-                    playerList[i].sp.x = -100;
-                    playerList[i].sp.y = -100;
-                };
-                core.replaceScene(createDemonPhaseScene());
+                if(playerList.length >= 5){
+                    for(let i = 0; i < playerList.length; i++){
+                        playerList[i].sp.x = -100;
+                        playerList[i].sp.y = -100;
+                    };
+                    core.replaceScene(createDemonPhaseScene());
+                }
             });
             return scene;
         };
@@ -116,9 +130,14 @@ window.onload = function(){
             movingCharacter = demon;
             turn++;
             var scene = new Scene();
+            scene.backgroundColor = '#999999'; 
             var captionLabel = new Label();
             scene.addChild(captionLabel);
             captionLabel.text = '鬼フェーズ：'+turn+'ターン目';
+            movingCharacterLabel = new Label();
+            scene.addChild(movingCharacterLabel);
+            movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
+            movingCharacterLabel.y = 30;
             for(let i = 0; i < playerList.length; i++){
                 // let playerLabel = new Label();
                 // scene.addChild(playerLabel);
@@ -145,9 +164,14 @@ window.onload = function(){
         var createStudentPhaseScene = function(){
             movingCharacter = playerList[1];
             var scene = new Scene();
+            scene.backgroundColor = '#999999'; 
             var captionLabel = new Label();
             scene.addChild(captionLabel);
             captionLabel.text = '生徒フェーズ：'+turn+'ターン目';
+            movingCharacterLabel = new Label();
+            scene.addChild(movingCharacterLabel);
+            movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
+            movingCharacterLabel.y = 30;
             for(let i = 0; i < playerList.length; i++){
                 // let playerLabel = new Label();
                 // scene.addChild(playerLabel);
@@ -172,6 +196,7 @@ window.onload = function(){
                 if (core.input.two) movingCharacter = playerList[2];
                 if (core.input.three) movingCharacter = playerList[3];
                 if (core.input.four) movingCharacter = playerList[4];
+                movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
            });
 
             return scene;
