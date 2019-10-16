@@ -27,6 +27,10 @@ window.onload = function(){
     var movingCharacter = demon;
     core.fps = 15;
     core.onload = function(){
+        core.keybind(49, 'one');
+        core.keybind(50, 'two');
+        core.keybind(51, 'three');
+        core.keybind(52, 'four');
         demon.sp = new Sprite(32,32);
         demon.sp.image = core.assets['chara1.png'];
         demon.sp.frame = 5
@@ -139,7 +143,7 @@ window.onload = function(){
         };
 
         var createStudentPhaseScene = function(){
-            movingCharacter = characterList[0];
+            movingCharacter = playerList[1];
             var scene = new Scene();
             var captionLabel = new Label();
             scene.addChild(captionLabel);
@@ -162,7 +166,13 @@ window.onload = function(){
                 core.replaceScene(createDemonPhaseScene());
             });
             scene.addChild(map);
-            console.log(map);
+
+            scene.addEventListener('enterframe', function(e) {
+                if (core.input.one) movingCharacter = playerList[1];
+                if (core.input.two) movingCharacter = playerList[2];
+                if (core.input.three) movingCharacter = playerList[3];
+                if (core.input.four) movingCharacter = playerList[4];
+           });
 
             return scene;
         };
