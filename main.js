@@ -3,7 +3,7 @@ enchant();
 window.onload = function(){
     var core = new Core(800, 1000);
     var turn = 0;
-    core.preload(['chara1.png', 'se_maoudamashii_se_heartbeat01.mp3']);
+    core.preload(['chara1.png', 'Heart_1.wav', 'Heart_2.wav', 'Heart_3.wav']);
  
     var characterList = [
         {
@@ -41,20 +41,21 @@ window.onload = function(){
         core.keybind(52, 'four');
         demon.sp = new Sprite(32,32);
         demon.sp.image = core.assets['chara1.png'];
-        demon.sp.frame = 5
+        demon.sp.frame = 5;
         for(let i = 0; i < characterList.length; i++){
             characterList[i].sp = new Sprite(32,32);
             characterList[i].sp.image = core.assets['chara1.png'];
-            characterList[i].sp.frame = i
+            characterList[i].sp.frame = i;
         }
         var map = new Group();
-        
+        var baseDistance = 0;
+        var sound = core.assets['Heart_1.wav'];
         $.getJSON("map.json" , function(mapJson) {
-            console.log(mapJson);
             $.each(mapJson["mapData"], function(index, data){
                 // console.log(data);
                 var room = new Group();
                 room.character = new Array();
+                room.floor = data.floor;
                 var sprite = new Sprite(data.room_width, data.room_height);
                 console.log(room);
                 room.addChild(sprite);
@@ -69,6 +70,7 @@ window.onload = function(){
                 var surface = new Surface( data.room_width, data.room_height);
                 sprite.image = surface;
                 sprite.on('touchstart', function(){
+                    if (sound.src.loop) sound.stop();
                     movingCharacter.room.character = movingCharacter.room.character.filter(n => n !== movingCharacter);
                     movingCharacter.room = room;
                     room.character.push(movingCharacter);
@@ -82,6 +84,7 @@ window.onload = function(){
                 map.addChild(room);
                 surface.context.strokeRect (0, 0, data.room_width, data.room_height);
             });
+            baseDistance = 1/(Math.sqrt(Math.pow(map.lastChild.firstChild.x-map.firstChild.firstChild.x, 2)+Math.pow(map.lastChild.firstChild.y-map.firstChild.firstChild.y, 2))+100*(mapJson.floorNumber-1));
         });
         
 
@@ -219,17 +222,33 @@ window.onload = function(){
             scene.addChild(map);
 
             scene.addEventListener('enterframe', function(e) {
-                if (core.input.one) movingCharacter = playerList[1];
-                if (core.input.two) movingCharacter = playerList[2];
-                if (core.input.three) movingCharacter = playerList[3];
-                if (core.input.four) movingCharacter = playerList[4];
+                if (core.input.one){
+                    movingCharacter = playerList[1];
+                    if (sound.src.loop) sound.stop();
+                }
+                if (core.input.two){
+                     movingCharacter = playerList[2];
+                    if (sound.src.loop) sound.stop();
+                }
+                if (core.input.three){
+                    movingCharacter = playerList[3];
+                    if (sound.src.loop) sound.stop();
+                }
+                if (core.input.four){
+                    movingCharacter = playerList[4];
+                    if (sound.src.loop) sound.stop();
+                }
                 if (core.input.space){
-                    var sound = core.assets['se_maoudamashii_se_heartbeat01.mp3'];
-                    if (sound.src.loop) sound.stop()
-                    else sound.play();
-                    sound.src.loop = !sound.src.loop;
-                    console.log(sound);
-                    console.log(sound.src);
+                    if (sound.src.loop) sound.stop();
+                    distance = (Math.sqrt(Math.pow(demon.room.firstChild.x-movingCharacter.room.firstChild.x, 2)+Math.pow(demon.room.firstChild.y-movingCharacter.room.firstChild.y, 2))+100*Math.abs(movingCharacter.room.floor-demon.room.floor))*baseDistance;
+                    normalizationDistance = Math.floor(distance+1);
+                    if(normalizationDistance >= 3) sound = core.assets['Heart_1.wav'];
+                    if(normalizationDistance == 2) sound = core.assets['Heart_2.wav'];
+                    if(normalizationDistance == 1) sound = core.assets['Heart_3.wav'];
+                    sound.play();
+                    sound.src.loop = true;
+                    // console.log(sound);
+                    // console.log(sound.src);
                 }
                 movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
            });
