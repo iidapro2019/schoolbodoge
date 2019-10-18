@@ -76,9 +76,9 @@ window.onload = function(){
             var scene = new Scene();
             scene.backgroundColor = '#999999';
             var label = new Label();
-            label.x = 350;
-            label.y = 250;
-            label.text = 'みている';
+            label.x = 250;
+            label.y = 280;
+            label.text = '視　て　い　る';
             label.font = "40px Palatino"
             scene.addChild(label);
             scene.on('touchstart', function(){
