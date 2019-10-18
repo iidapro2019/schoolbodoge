@@ -8,7 +8,6 @@ window.onload = function(){
     var characterList = [
         {
             name: '春原 歌呼'
-
         },
         {
             name: '夏山 鈴莉'
@@ -53,20 +52,34 @@ window.onload = function(){
         $.getJSON("map.json" , function(mapJson) {
             console.log(mapJson);
             $.each(mapJson["mapData"], function(index, data){
-                console.log(data);
+                // console.log(data);
+                var room = new Group();
+                room.character = new Array();
                 var sprite = new Sprite(data.room_width, data.room_height);
-                sprite.x = data.pos_x+50
-                sprite.y = data.pos_y+300*(data.floor-1)+80
+                console.log(room);
+                room.addChild(sprite);
+                sprite.x = data.pos_x+50;
+                sprite.y = data.pos_y+300*(data.floor-1)+80;
+                var roomNumber = new Label();
+                roomNumber.text = index + 1;
+                roomNumber.x = data.pos_x+53;
+                roomNumber.y = data.pos_y+300*(data.floor-1)+83;
+                room.addChild(roomNumber);
                 // Surfaceオブジェクトを生成しスプライトに連結
                 var surface = new Surface( data.room_width, data.room_height);
                 sprite.image = surface;
                 sprite.on('touchstart', function(){
-                    movingCharacter.location = sprite;
-                    movingCharacter.sp.x = sprite.x
-                    movingCharacter.sp.y = sprite.y
-                    console.log(movingCharacter.name+"は(x:"+sprite.x+", y:"+sprite.y+")に移動した")
+                    movingCharacter.room.character = movingCharacter.room.character.filter(n => n !== movingCharacter);
+                    movingCharacter.room = room;
+                    room.character.push(movingCharacter);
+                    for(let i = 0; i < playerList.length; i++){
+                        playerList[i].sp.x = playerList[i].room.firstChild.x+30*((playerList[i].room.character.indexOf(playerList[i]))%2);
+                        playerList[i].sp.y = playerList[i].room.firstChild.y+15+35*Math.floor((playerList[i].room.character.indexOf(playerList[i]))/2);
+                    }
+                    console.log(movingCharacter.name+"は(x:"+sprite.x+", y:"+sprite.y+")に移動した");
+                    console.log(room);
                 });
-                map.addChild(sprite);
+                map.addChild(room);
                 surface.context.strokeRect (0, 0, data.room_width, data.room_height);
             });
         });
@@ -92,6 +105,8 @@ window.onload = function(){
             scene.backgroundColor = '#999999';
             var captionLabel = new Label();
             scene.addChild(captionLabel);
+            captionLabel.x = 10;
+            captionLabel.y = 10;
             captionLabel.text = 'キャラ選択'
             for(let i = 0; i < characterList.length; i++){
                 let playerLabel = new Label();
@@ -113,13 +128,16 @@ window.onload = function(){
             // });
             var nextLabel = new Label();
             scene.addChild(nextLabel);
-            nextLabel.text = '次へ'
+            nextLabel.text = '次へ';
             nextLabel.x = 650;
+            nextLabel.y = 10;
             nextLabel.on('touchstart', function(){
                 if(playerList.length >= 5){
                     for(let i = 0; i < playerList.length; i++){
-                        playerList[i].sp.x = -100;
-                        playerList[i].sp.y = -100;
+                        playerList[i].room = map.firstChild;
+                        map.firstChild.character.push(playerList[i]);
+                        playerList[i].sp.x = playerList[i].room.firstChild.x+30*((playerList[i].room.character.indexOf(playerList[i]))%2);
+                        playerList[i].sp.y = playerList[i].room.firstChild.y+15+35*Math.floor((playerList[i].room.character.indexOf(playerList[i]))/2);
                     };
                     core.replaceScene(createDemonPhaseScene());
                 }
@@ -134,11 +152,14 @@ window.onload = function(){
             scene.backgroundColor = '#999999';
             var captionLabel = new Label();
             scene.addChild(captionLabel);
+            captionLabel.x = 10;
+            captionLabel.y = 10;
             captionLabel.text = '鬼フェーズ：'+turn+'ターン目';
             movingCharacterLabel = new Label();
             scene.addChild(movingCharacterLabel);
             movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
-            movingCharacterLabel.y = 30;
+            movingCharacterLabel.x = 10;
+            movingCharacterLabel.y = 40;
             for(let i = 0; i < playerList.length; i++){
                 // let playerLabel = new Label();
                 // scene.addChild(playerLabel);
@@ -154,6 +175,7 @@ window.onload = function(){
             scene.addChild(nextLabel);
             nextLabel.text = '生徒フェーズへ'
             nextLabel.x = 600;
+            nextLabel.y = 10;
             nextLabel.on('touchstart', function(){
                 core.replaceScene(createStudentPhaseScene());
             });
@@ -168,11 +190,14 @@ window.onload = function(){
             scene.backgroundColor = '#999999';
             var captionLabel = new Label();
             scene.addChild(captionLabel);
+            captionLabel.x = 10;
+            captionLabel.y = 10;
             captionLabel.text = '生徒フェーズ：'+turn+'ターン目';
             movingCharacterLabel = new Label();
             scene.addChild(movingCharacterLabel);
             movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
-            movingCharacterLabel.y = 30;
+            movingCharacterLabel.x = 10;
+            movingCharacterLabel.y = 40;
             for(let i = 0; i < playerList.length; i++){
                 // let playerLabel = new Label();
                 // scene.addChild(playerLabel);
@@ -187,6 +212,7 @@ window.onload = function(){
             scene.addChild(nextLabel);
             nextLabel.text = '鬼フェーズへ'
             nextLabel.x = 600;
+            nextLabel.y = 10;
             nextLabel.on('touchstart', function(){
                 core.replaceScene(createDemonPhaseScene());
             });
