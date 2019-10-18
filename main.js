@@ -3,7 +3,7 @@ enchant();
 window.onload = function(){
     var core = new Core(800, 1000);
     var turn = 0;
-    core.preload('chara1.png');
+    core.preload(['chara1.png', 'se_maoudamashii_se_heartbeat01.mp3']);
  
     var characterList = [
         {
@@ -35,6 +35,7 @@ window.onload = function(){
     core._pageY = 80;
     core._pageX = left;
     core.onload = function(){
+        core.keybind(32, 'space');
         core.keybind(49, 'one');
         core.keybind(50, 'two');
         core.keybind(51, 'three');
@@ -73,7 +74,7 @@ window.onload = function(){
 
         var createTitleScene = function(){
             var scene = new Scene();
-            scene.backgroundColor = '#999999'; 
+            scene.backgroundColor = '#999999';
             var label = new Label();
             label.x = 350;
             label.y = 250;
@@ -88,7 +89,7 @@ window.onload = function(){
 
         var createSelectScene = function(){
             var scene = new Scene();
-            scene.backgroundColor = '#999999'; 
+            scene.backgroundColor = '#999999';
             var captionLabel = new Label();
             scene.addChild(captionLabel);
             captionLabel.text = 'キャラ選択'
@@ -130,7 +131,7 @@ window.onload = function(){
             movingCharacter = demon;
             turn++;
             var scene = new Scene();
-            scene.backgroundColor = '#999999'; 
+            scene.backgroundColor = '#999999';
             var captionLabel = new Label();
             scene.addChild(captionLabel);
             captionLabel.text = '鬼フェーズ：'+turn+'ターン目';
@@ -164,7 +165,7 @@ window.onload = function(){
         var createStudentPhaseScene = function(){
             movingCharacter = playerList[1];
             var scene = new Scene();
-            scene.backgroundColor = '#999999'; 
+            scene.backgroundColor = '#999999';
             var captionLabel = new Label();
             scene.addChild(captionLabel);
             captionLabel.text = '生徒フェーズ：'+turn+'ターン目';
@@ -196,6 +197,14 @@ window.onload = function(){
                 if (core.input.two) movingCharacter = playerList[2];
                 if (core.input.three) movingCharacter = playerList[3];
                 if (core.input.four) movingCharacter = playerList[4];
+                if (core.input.space){
+                    var sound = core.assets['se_maoudamashii_se_heartbeat01.mp3'];
+                    if (sound.src.loop) sound.stop()
+                    else sound.play();
+                    sound.src.loop = !sound.src.loop;
+                    console.log(sound);
+                    console.log(sound.src);
+                }
                 movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
            });
 
