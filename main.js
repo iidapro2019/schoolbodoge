@@ -223,25 +223,31 @@ window.onload = function(){
 
             scene.addEventListener('enterframe', function(e) {
                 if (core.input.one){
+                    console.log(sound._state);
                     movingCharacter = playerList[1];
-                    if (sound.src.loop) sound.stop();
+                    if(sound._state) sound.stop();
                 }
                 if (core.input.two){
+                    console.log(sound._state);
                      movingCharacter = playerList[2];
-                    if (sound.src.loop) sound.stop();
+                     if(sound._state) sound.stop();
                 }
                 if (core.input.three){
+                    console.log(sound._state);
                     movingCharacter = playerList[3];
-                    if (sound.src.loop) sound.stop();
+                    if(sound._state) sound.stop();
                 }
                 if (core.input.four){
+                    console.log(sound._state);
                     movingCharacter = playerList[4];
-                    if (sound.src.loop) sound.stop();
+                    if(sound._state) sound.stop();
                 }
                 if (core.input.space){
-                    if (sound.src.loop) sound.stop();
+                    if(sound._state) return;
+
                     distance = (Math.sqrt(Math.pow(demon.room.firstChild.x-movingCharacter.room.firstChild.x, 2)+Math.pow(demon.room.firstChild.y-movingCharacter.room.firstChild.y, 2))+100*Math.abs(movingCharacter.room.floor-demon.room.floor))*baseDistance;
-                    normalizationDistance = Math.floor(distance+1);
+                    normalizationDistance = Math.floor(distance*2+1);
+                    // console.log(normalizationDistance);
                     if(normalizationDistance >= 3) sound = core.assets['Heart_1.wav'];
                     if(normalizationDistance == 2) sound = core.assets['Heart_2.wav'];
                     if(normalizationDistance == 1) sound = core.assets['Heart_3.wav'];
