@@ -79,6 +79,7 @@ window.onload = function(){
                         playerList[i].sp.y = playerList[i].room.firstChild.y+15+35*Math.floor((playerList[i].room.character.indexOf(playerList[i]))/2);
                     }
                     console.log(movingCharacter.name+"は(x:"+sprite.x+", y:"+sprite.y+")に移動した");
+                    console.log(map);
                     console.log(room);
                 });
                 map.addChild(room);
@@ -86,7 +87,7 @@ window.onload = function(){
             });
             baseDistance = 1/(Math.sqrt(Math.pow(map.lastChild.firstChild.x-map.firstChild.firstChild.x, 2)+Math.pow(map.lastChild.firstChild.y-map.firstChild.firstChild.y, 2))+100*(mapJson.floorNumber-1));
         });
-        
+
 
         var createTitleScene = function(){
             var scene = new Scene();
@@ -122,6 +123,8 @@ window.onload = function(){
                 scene.addChild(characterList[i].sp);
                 $(playerLabel).one('touchstart', function(){
                     playerList.push(characterList[i]);
+                    console.log(characterList[i].sp);
+                    characterList[i].sp.className = "chara";
                     playerLabel.text = playerList.length+playerLabel.text
                 });
             };
@@ -136,9 +139,10 @@ window.onload = function(){
             nextLabel.y = 10;
             nextLabel.on('touchstart', function(){
                 if(playerList.length >= 5){
+                    randomRooms = randomSelect(map.childNodes, playerList.length);
                     for(let i = 0; i < playerList.length; i++){
-                        playerList[i].room = map.firstChild;
-                        map.firstChild.character.push(playerList[i]);
+                        playerList[i].room = randomRooms[i];
+                        randomRooms[i].character.push(playerList[i]);
                         playerList[i].sp.x = playerList[i].room.firstChild.x+30*((playerList[i].room.character.indexOf(playerList[i]))%2);
                         playerList[i].sp.y = playerList[i].room.firstChild.y+15+35*Math.floor((playerList[i].room.character.indexOf(playerList[i]))/2);
                     };
@@ -273,3 +277,34 @@ window.onload = function(){
     };
     core.start();
 };
+
+// function randomSelect(array, num){
+//     let oldArray = array;
+//     let newArray = [];
+
+//     while(newArray.length < num && oldArray.length > 0){
+//         // 配列からランダムな要素を選ぶ
+//         const rand = Math.floor(Math.random() * oldArray.length);
+//         // 選んだ要素を別の配列に登録する
+//         newArray.push(oldArray[rand]);
+//         // もとの配列からは削除する
+//         oldArray.splice(rand, 1);
+//     }
+
+//     return newArray;
+// }
+
+function randomSelect(array, num) {
+    let a = array;
+    let t = [];
+    let r = [];
+    let l = a.length;
+    let n = num < l ? num : l;
+    while (n-- > 0) {
+      let i = Math.random() * l | 0;
+      r[n] = t[i] || a[i];
+      --l;
+      t[i] = t[l] || a[l];
+    }
+    return r;
+  }
