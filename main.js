@@ -116,8 +116,8 @@ window.onload = function(){
                 let playerLabel = new Label();
                 scene.addChild(playerLabel);
                 playerLabel.text = characterList[i].name;
-                playerLabel.x = 100*(i%2)+40;
-                playerLabel.y = 35*(Math.floor(i/2)+1);
+                playerLabel.x = 280*(i%2)+80;
+                playerLabel.y = 80*(Math.floor(i/2)+1);
                 characterList[i].sp.x = playerLabel.x-30;
                 characterList[i].sp.y = playerLabel.y-5;
                 scene.addChild(characterList[i].sp);
@@ -125,7 +125,7 @@ window.onload = function(){
                     playerList.push(characterList[i]);
                     console.log(characterList[i].sp);
                     characterList[i].sp.className = "chara";
-                    playerLabel.text = playerList.length+playerLabel.text
+                    playerLabel.text = playerList.length+playerLabel.text;
                 });
             };
             // scene.addChild(characterList[3].sp);
@@ -145,6 +145,8 @@ window.onload = function(){
                         randomRooms[i].character.push(playerList[i]);
                         playerList[i].sp.x = playerList[i].room.firstChild.x+30*((playerList[i].room.character.indexOf(playerList[i]))%2);
                         playerList[i].sp.y = playerList[i].room.firstChild.y+15+35*Math.floor((playerList[i].room.character.indexOf(playerList[i]))/2);
+                        playerList[i]
+                        createTop(playerList[i], i);
                     };
                     core.replaceScene(createDemonPhaseScene());
                 }
@@ -176,6 +178,7 @@ window.onload = function(){
                 // playerList[i].sp.x = -10;
                 // playerList[i].sp.y = -10;
                 scene.addChild(playerList[i].sp);
+                scene.addChild(playerList[i].top);
             };
 
             var nextLabel = new Label();
@@ -214,6 +217,13 @@ window.onload = function(){
                 // playerList[i].sp.x = -10;
                 // playerList[i].sp.y = -10;
                 scene.addChild(playerList[i].sp);
+                scene.addChild(playerList[i].top);
+                if(i == 0) continue;
+
+                playerList[i].top.on('touchstart', function(){
+                    movingCharacter = playerList[i];
+                    if(sound._state) sound.stop();
+                });
             };
             var nextLabel = new Label();
             scene.addChild(nextLabel);
@@ -257,8 +267,6 @@ window.onload = function(){
                     if(normalizationDistance == 1) sound = core.assets['Heart_3.wav'];
                     sound.play();
                     sound.src.loop = true;
-                    // console.log(sound);
-                    // console.log(sound.src);
                 }
                 movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
            });
@@ -273,26 +281,28 @@ window.onload = function(){
             captionLabel.text = 'リザルト'
             return scene;
         };
+        function createTop(chara, num){
+            chara.top = new Group();
+            var topSp = new Sprite(32,32);
+            topSp.image = core.assets['chara1.png'];
+            topSp.frame = chara.sp.frame;
+            topSp.x = 200 + num * 80;
+            topSp.y = 7;
+            chara.top.addChild(topSp);
+            var topLabel = new Label();
+            topLabel.text = chara.name;
+            topLabel.textAlign = 'center';
+            topLabel.x = 65 + num * 80;
+            topLabel.y = 40;
+            chara.top.addChild(topLabel);
+        }
+
         core.replaceScene(createTitleScene());
     };
     core.start();
+
+    
 };
-
-// function randomSelect(array, num){
-//     let oldArray = array;
-//     let newArray = [];
-
-//     while(newArray.length < num && oldArray.length > 0){
-//         // 配列からランダムな要素を選ぶ
-//         const rand = Math.floor(Math.random() * oldArray.length);
-//         // 選んだ要素を別の配列に登録する
-//         newArray.push(oldArray[rand]);
-//         // もとの配列からは削除する
-//         oldArray.splice(rand, 1);
-//     }
-
-//     return newArray;
-// }
 
 function randomSelect(array, num) {
     let a = array;
@@ -301,10 +311,11 @@ function randomSelect(array, num) {
     let l = a.length;
     let n = num < l ? num : l;
     while (n-- > 0) {
-      let i = Math.random() * l | 0;
-      r[n] = t[i] || a[i];
-      --l;
-      t[i] = t[l] || a[l];
+        let i = Math.random() * l | 0;
+        r[n] = t[i] || a[i];
+        --l;
+        t[i] = t[l] || a[l];
     }
     return r;
-  }
+}
+
