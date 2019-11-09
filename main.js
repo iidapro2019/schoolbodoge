@@ -3,6 +3,7 @@ enchant();
 window.onload = function(){
     var core = new Core(800, 1000);
     var turn = 0;
+    var sceneNumber = 0;
     core.preload(['chara1.png', 'select.png', 'Heart_1.wav', 'Heart_2.wav', 'Heart_3.wav']);
  
     var characterList = [
@@ -92,6 +93,7 @@ window.onload = function(){
 
 
         var createTitleScene = function(){
+            sceneNumber = 1;
             var scene = new Scene();
             scene.backgroundColor = '#999999';
             var label = new Label();
@@ -107,6 +109,7 @@ window.onload = function(){
         };
 
         var createSelectScene = function(){
+            sceneNumber = 2;
             var scene = new Scene();
             scene.backgroundColor = '#999999';
             var captionLabel = new Label();
@@ -157,6 +160,7 @@ window.onload = function(){
         };
 
         var createDemonPhaseScene = function(){
+            sceneNumber = 3;
             movingCharacter = demon;
             turn++;
             var scene = new Scene();
@@ -200,6 +204,7 @@ window.onload = function(){
         };
 
         var createStudentPhaseScene = function(){
+            sceneNumber = 4;
             movingCharacter = playerList[1];
             var scene = new Scene();
             scene.backgroundColor = '#999999';
@@ -229,6 +234,8 @@ window.onload = function(){
                 if(i == 0) continue;
 
                 playerList[i].top.on('touchstart', function(){
+                    if(sceneNumber != 4) return;
+                    
                     movingCharacter = playerList[i];
                     movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
                     selectFrame.x = movingCharacter.top.firstChild.x;
@@ -297,6 +304,7 @@ window.onload = function(){
         };
 
         var createResultScene = function(){
+            sceneNumber = 5;
             var scene = new Scene();
             var captionLabel = new Label();
             scene.addChild(captionLabel);
