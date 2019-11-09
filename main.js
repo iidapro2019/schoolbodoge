@@ -3,7 +3,7 @@ enchant();
 window.onload = function(){
     var core = new Core(800, 1000);
     var turn = 0;
-    core.preload(['chara1.png', 'Heart_1.wav', 'Heart_2.wav', 'Heart_3.wav']);
+    core.preload(['chara1.png', 'select.png', 'Heart_1.wav', 'Heart_2.wav', 'Heart_3.wav']);
  
     var characterList = [
         {
@@ -50,6 +50,8 @@ window.onload = function(){
         var map = new Group();
         var baseDistance = 0;
         var sound = core.assets['Heart_1.wav'];
+        var selectFrame = new Sprite(32, 32);
+        selectFrame.image = core.assets['select.png'];
         $.getJSON("map.json" , function(mapJson) {
             $.each(mapJson["mapData"], function(index, data){
                 // console.log(data);
@@ -189,6 +191,9 @@ window.onload = function(){
             nextLabel.on('touchstart', function(){
                 core.replaceScene(createStudentPhaseScene());
             });
+            scene.addChild(selectFrame);
+            selectFrame.x = movingCharacter.top.firstChild.x;
+            selectFrame.y = movingCharacter.top.firstChild.y;
             scene.addChild(map);
             
             return scene;
@@ -208,6 +213,9 @@ window.onload = function(){
             movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
             movingCharacterLabel.x = 10;
             movingCharacterLabel.y = 40;
+            scene.addChild(selectFrame);
+            selectFrame.x = movingCharacter.top.firstChild.x;
+            selectFrame.y = movingCharacter.top.firstChild.y;
             for(let i = 0; i < playerList.length; i++){
                 // let playerLabel = new Label();
                 // scene.addChild(playerLabel);
@@ -222,6 +230,9 @@ window.onload = function(){
 
                 playerList[i].top.on('touchstart', function(){
                     movingCharacter = playerList[i];
+                    movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
+                    selectFrame.x = movingCharacter.top.firstChild.x;
+                    selectFrame.y = movingCharacter.top.firstChild.y;
                     if(sound._state) sound.stop();
                 });
             };
@@ -239,21 +250,33 @@ window.onload = function(){
                 if (core.input.one){
                     console.log(sound._state);
                     movingCharacter = playerList[1];
+                    movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
+                    selectFrame.x = movingCharacter.top.firstChild.x;
+                    selectFrame.y = movingCharacter.top.firstChild.y;
                     if(sound._state) sound.stop();
                 }
                 if (core.input.two){
                     console.log(sound._state);
                      movingCharacter = playerList[2];
+                     movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
+                     selectFrame.x = movingCharacter.top.firstChild.x;
+                     selectFrame.y = movingCharacter.top.firstChild.y;
                      if(sound._state) sound.stop();
                 }
                 if (core.input.three){
                     console.log(sound._state);
                     movingCharacter = playerList[3];
+                    movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
+                    selectFrame.x = movingCharacter.top.firstChild.x;
+                    selectFrame.y = movingCharacter.top.firstChild.y;
                     if(sound._state) sound.stop();
                 }
                 if (core.input.four){
                     console.log(sound._state);
                     movingCharacter = playerList[4];
+                    movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
+                    selectFrame.x = movingCharacter.top.firstChild.x;
+                    selectFrame.y = movingCharacter.top.firstChild.y;
                     if(sound._state) sound.stop();
                 }
                 if (core.input.space){
@@ -268,7 +291,6 @@ window.onload = function(){
                     sound.play();
                     sound.src.loop = true;
                 }
-                movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
            });
 
             return scene;
