@@ -92,11 +92,15 @@ window.onload = function(){
                     if (sound.src.loop) sound.stop();
                     _movingCharacter.room.characters = _movingCharacter.room.characters.filter(n => n !== _movingCharacter);
                     if(sceneNumber == 3){
-                        room.characters.forEach(chara => { if(chara.status == 'escape' && confirm(`${chara.name}を捕まえます。`)) chara.status = 'caught'; });
+                        room.characters.forEach(chara => { if(chara.status == 'escape' && confirm(`${chara.name}を捕まえます。`)){
+                            chara.status = 'caught';
+                            if(!playerList.some(chara => chara.status === 'escape')) core.replaceScene(createResultScene());
+                        }});
                     }else if(sceneNumber == 4){
                         if(room.characters.includes(demon) && confirm(`${_movingCharacter.name}を捕まえます。`)){
                             _movingCharacter.status = 'caught';
                             if(playerList.some(chara => chara.status === 'escape')) changeMovingCharacter(playerList.find(chara => chara.status === 'escape'));
+                            else core.replaceScene(createResultScene());
                         }
                     }
                     _movingCharacter.room = room;
@@ -309,9 +313,13 @@ window.onload = function(){
         var createResultScene = function(){
             sceneNumber = 5;
             var scene = new Scene();
+            scene.backgroundColor = '#999999';
             var captionLabel = new Label();
+            captionLabel.x = 250;
+            captionLabel.y = 280;
             scene.addChild(captionLabel);
-            captionLabel.text = 'リザルト'
+            captionLabel.text = 'リザルト';
+            captionLabel.font = '40px Palatino';
             return scene;
         };
         function createTop(chara, num){
