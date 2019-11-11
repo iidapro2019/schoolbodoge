@@ -8,16 +8,20 @@ window.onload = function(){
  
     var characterList = [
         {
-            name: '春原 歌呼'
+            name: '春原 歌呼',
+            status: 'escape'
         },
         {
-            name: '夏山 鈴莉'
+            name: '夏山 鈴莉',
+            status: 'escape'
         },
         {
-            name: '柳瀬 秋太'
+            name: '柳瀬 秋太',
+            status: 'escape'
         },
         {
-            name: '久遠 冬夜'
+            name: '久遠 冬夜',
+            status: 'escape'
         }
     ];
     var demon  = {
@@ -47,6 +51,15 @@ window.onload = function(){
             characterList[i].sp = new Sprite(32,32);
             characterList[i].sp.image = core.assets['chara1.png'];
             characterList[i].sp.frame = i;
+            let currentStatus = characterList[i].status;
+            Object.defineProperty(characterList[i], 'status', {
+                get: () => currentStatus,
+                set: newValue => {
+                    currentStatus = newValue;
+                    if(newValue==='caught') characterList[i].sp.opacity = 0.3;
+                },
+                configurable: true
+            });
         }
         var map = new Group();
         var baseDistance = 0;
@@ -57,7 +70,7 @@ window.onload = function(){
             $.each(mapJson["mapData"], function(index, data){
                 // console.log(data);
                 var room = new Group();
-                room.character = new Array();
+                room.characters = new Array();
                 room.floor = data.floor;
                 var sprite = new Sprite(data.room_width, data.room_height);
                 console.log(room);
@@ -73,15 +86,26 @@ window.onload = function(){
                 var surface = new Surface( data.room_width, data.room_height);
                 sprite.image = surface;
                 sprite.on('touchstart', function(){
+                    _movingCharacter=movingCharacter;
+                    if(_movingCharacter.room == room) return;
+
                     if (sound.src.loop) sound.stop();
-                    movingCharacter.room.character = movingCharacter.room.character.filter(n => n !== movingCharacter);
-                    movingCharacter.room = room;
-                    room.character.push(movingCharacter);
-                    for(let i = 0; i < playerList.length; i++){
-                        playerList[i].sp.x = playerList[i].room.firstChild.x+30*((playerList[i].room.character.indexOf(playerList[i]))%2);
-                        playerList[i].sp.y = playerList[i].room.firstChild.y+15+35*Math.floor((playerList[i].room.character.indexOf(playerList[i]))/2);
+                    _movingCharacter.room.characters = _movingCharacter.room.characters.filter(n => n !== _movingCharacter);
+                    if(sceneNumber == 3){
+                        room.characters.forEach(chara => { if(chara.status == 'escape' && confirm(`${chara.name}を捕まえます。`)) chara.status = 'caught'; });
+                    }else if(sceneNumber == 4){
+                        if(room.characters.includes(demon) && confirm(`${_movingCharacter.name}を捕まえます。`)){
+                            _movingCharacter.status = 'caught';
+                            if(playerList.some(chara => chara.status === 'escape')) changeMovingCharacter(playerList.find(chara => chara.status === 'escape'));
+                        }
                     }
-                    console.log(movingCharacter.name+"は(x:"+sprite.x+", y:"+sprite.y+")に移動した");
+                    _movingCharacter.room = room;
+                    room.characters.push(_movingCharacter);
+                    for(let i = 0; i < playerList.length; i++){
+                        playerList[i].sp.x = playerList[i].room.firstChild.x+30*((playerList[i].room.characters.indexOf(playerList[i]))%2);
+                        playerList[i].sp.y = playerList[i].room.firstChild.y+15+35*Math.floor((playerList[i].room.characters.indexOf(playerList[i]))/2);
+                    }
+                    console.log(_movingCharacter.name+"は(x:"+sprite.x+", y:"+sprite.y+")に移動した");
                     console.log(map);
                     console.log(room);
                 });
@@ -147,9 +171,9 @@ window.onload = function(){
                     randomRooms = randomSelect(map.childNodes, playerList.length);
                     for(let i = 0; i < playerList.length; i++){
                         playerList[i].room = randomRooms[i];
-                        randomRooms[i].character.push(playerList[i]);
-                        playerList[i].sp.x = playerList[i].room.firstChild.x+30*((playerList[i].room.character.indexOf(playerList[i]))%2);
-                        playerList[i].sp.y = playerList[i].room.firstChild.y+15+35*Math.floor((playerList[i].room.character.indexOf(playerList[i]))/2);
+                        randomRooms[i].characters.push(playerList[i]);
+                        playerList[i].sp.x = playerList[i].room.firstChild.x+30*((playerList[i].room.characters.indexOf(playerList[i]))%2);
+                        playerList[i].sp.y = playerList[i].room.firstChild.y+15+35*Math.floor((playerList[i].room.characters.indexOf(playerList[i]))/2);
                         playerList[i]
                         createTop(playerList[i], i);
                     };
@@ -161,7 +185,6 @@ window.onload = function(){
 
         var createDemonPhaseScene = function(){
             sceneNumber = 3;
-            movingCharacter = demon;
             turn++;
             var scene = new Scene();
             scene.backgroundColor = '#999999';
@@ -172,7 +195,6 @@ window.onload = function(){
             captionLabel.text = '鬼フェーズ：'+turn+'ターン目';
             movingCharacterLabel = new Label();
             scene.addChild(movingCharacterLabel);
-            movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
             movingCharacterLabel.x = 10;
             movingCharacterLabel.y = 40;
             for(let i = 0; i < playerList.length; i++){
@@ -196,8 +218,7 @@ window.onload = function(){
                 core.replaceScene(createStudentPhaseScene());
             });
             scene.addChild(selectFrame);
-            selectFrame.x = movingCharacter.top.firstChild.x;
-            selectFrame.y = movingCharacter.top.firstChild.y;
+            changeMovingCharacter(demon);
             scene.addChild(map);
             
             return scene;
@@ -205,7 +226,6 @@ window.onload = function(){
 
         var createStudentPhaseScene = function(){
             sceneNumber = 4;
-            movingCharacter = playerList[1];
             var scene = new Scene();
             scene.backgroundColor = '#999999';
             var captionLabel = new Label();
@@ -215,12 +235,10 @@ window.onload = function(){
             captionLabel.text = '生徒フェーズ：'+turn+'ターン目';
             movingCharacterLabel = new Label();
             scene.addChild(movingCharacterLabel);
-            movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
             movingCharacterLabel.x = 10;
             movingCharacterLabel.y = 40;
             scene.addChild(selectFrame);
-            selectFrame.x = movingCharacter.top.firstChild.x;
-            selectFrame.y = movingCharacter.top.firstChild.y;
+            changeMovingCharacter(playerList.find(chara => chara.status === 'escape'));
             for(let i = 0; i < playerList.length; i++){
                 // let playerLabel = new Label();
                 // scene.addChild(playerLabel);
@@ -234,12 +252,9 @@ window.onload = function(){
                 if(i == 0) continue;
 
                 playerList[i].top.on('touchstart', function(){
-                    if(sceneNumber != 4) return;
-                    
-                    movingCharacter = playerList[i];
-                    movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
-                    selectFrame.x = movingCharacter.top.firstChild.x;
-                    selectFrame.y = movingCharacter.top.firstChild.y;
+                    if(sceneNumber != 4 || playerList[i].status !== 'escape') return;
+
+                    changeMovingCharacter(playerList[i]);
                     if(sound._state) sound.stop();
                 });
             };
@@ -254,36 +269,24 @@ window.onload = function(){
             scene.addChild(map);
 
             scene.addEventListener('enterframe', function(e) {
-                if (core.input.one){
+                if (core.input.one && playerList[1].status === "escape"){
                     console.log(sound._state);
-                    movingCharacter = playerList[1];
-                    movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
-                    selectFrame.x = movingCharacter.top.firstChild.x;
-                    selectFrame.y = movingCharacter.top.firstChild.y;
+                    changeMovingCharacter(playerList[1]);
                     if(sound._state) sound.stop();
                 }
-                if (core.input.two){
+                if (core.input.two && playerList[2].status === "escape"){
                     console.log(sound._state);
-                     movingCharacter = playerList[2];
-                     movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
-                     selectFrame.x = movingCharacter.top.firstChild.x;
-                     selectFrame.y = movingCharacter.top.firstChild.y;
+                    changeMovingCharacter(playerList[2]);
                      if(sound._state) sound.stop();
                 }
-                if (core.input.three){
+                if (core.input.three && playerList[3].status === "escape"){
                     console.log(sound._state);
-                    movingCharacter = playerList[3];
-                    movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
-                    selectFrame.x = movingCharacter.top.firstChild.x;
-                    selectFrame.y = movingCharacter.top.firstChild.y;
+                    changeMovingCharacter(playerList[3]);
                     if(sound._state) sound.stop();
                 }
-                if (core.input.four){
+                if (core.input.four && playerList[4].status === "escape"){
                     console.log(sound._state);
-                    movingCharacter = playerList[4];
-                    movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
-                    selectFrame.x = movingCharacter.top.firstChild.x;
-                    selectFrame.y = movingCharacter.top.firstChild.y;
+                    changeMovingCharacter(playerList[4]);
                     if(sound._state) sound.stop();
                 }
                 if (core.input.space){
@@ -325,6 +328,12 @@ window.onload = function(){
             topLabel.x = 65 + num * 80;
             topLabel.y = 40;
             chara.top.addChild(topLabel);
+        }
+        function changeMovingCharacter(chara){
+            movingCharacter = chara;
+            movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
+            selectFrame.x = movingCharacter.top.firstChild.x;
+            selectFrame.y = movingCharacter.top.firstChild.y;
         }
 
         core.replaceScene(createTitleScene());
