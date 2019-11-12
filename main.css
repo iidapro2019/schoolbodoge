@@ -43,3 +43,7 @@ li.game a:hover {
 .game-page{
 	background-image: url('image/home-background.jpg');
 }
+
+img{
+	width: 100%;
+}

@@ -59,7 +59,10 @@ window.onload = function(){
                 get: () => currentStatus,
                 set: newValue => {
                     currentStatus = newValue;
-                    if(newValue==='caught') characterList[i].sp.opacity = 0.3;
+                    if(newValue==='caught'){
+                        characterList[i].sp.opacity = 0.3;
+                        characterList[i].top.firstChild.opacity = 0.3;
+                    }
                 },
                 configurable: true
             });
