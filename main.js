@@ -4,7 +4,7 @@ window.onload = function(){
     var core = new Core(800, 1000);
     var turn = 0;
     var sceneNumber = 0;
-    core.preload(['chara1.png', 'select.png', 'Heart_1.wav', 'Heart_2.wav', 'Heart_3.wav']);
+    core.preload(['chara1.png', 'select.png', 'image/background.jpg', 'Heart_1.wav', 'Heart_2.wav', 'Heart_3.wav']);
  
     var characterList = [
         {
@@ -44,6 +44,8 @@ window.onload = function(){
         core.keybind(50, 'two');
         core.keybind(51, 'three');
         core.keybind(52, 'four');
+        var gameBackgroundImg = new Sprite( 800, 1000 );
+        gameBackgroundImg.image = core.assets['image/background.jpg'];
         demon.sp = new Sprite(32,32);
         demon.sp.image = core.assets['chara1.png'];
         demon.sp.frame = 5;
@@ -123,7 +125,7 @@ window.onload = function(){
         var createTitleScene = function(){
             sceneNumber = 1;
             var scene = new Scene();
-            scene.backgroundColor = '#999999';
+            scene.addChild(gameBackgroundImg);
             var label = new Label();
             label.x = 250;
             label.y = 280;
@@ -139,7 +141,7 @@ window.onload = function(){
         var createSelectScene = function(){
             sceneNumber = 2;
             var scene = new Scene();
-            scene.backgroundColor = '#999999';
+            scene.addChild(gameBackgroundImg);
             var captionLabel = new Label();
             scene.addChild(captionLabel);
             captionLabel.x = 10;
@@ -191,7 +193,7 @@ window.onload = function(){
             sceneNumber = 3;
             turn++;
             var scene = new Scene();
-            scene.backgroundColor = '#999999';
+            scene.addChild(gameBackgroundImg);
             var captionLabel = new Label();
             scene.addChild(captionLabel);
             captionLabel.x = 10;
@@ -231,7 +233,7 @@ window.onload = function(){
         var createStudentPhaseScene = function(){
             sceneNumber = 4;
             var scene = new Scene();
-            scene.backgroundColor = '#999999';
+            scene.addChild(gameBackgroundImg);
             var captionLabel = new Label();
             scene.addChild(captionLabel);
             captionLabel.x = 10;
