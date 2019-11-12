@@ -1,10 +1,10 @@
 enchant();
 
 window.onload = function(){
-    var core = new Core(800, 1000);
+    var core = new Core(900, 1300);
     var turn = 0;
     var sceneNumber = 0;
-    core.preload(['chara1.png', 'select.png', 'image/background.jpg', 'Heart_1.wav', 'Heart_2.wav', 'Heart_3.wav']);
+    core.preload(['chara1.png', 'select.png', 'image/background.jpg', 'image/normal_classroom.png', 'image/special_classroom.png', 'Heart_1.wav', 'Heart_2.wav', 'Heart_3.wav']);
  
     var characterList = [
         {
@@ -35,6 +35,7 @@ window.onload = function(){
         "position":"absolute",
         "left":left+"px",
         "top":"80px",
+        "margin-bottom":"20px",
     });
     core._pageY = 80;
     core._pageX = left;
@@ -44,7 +45,7 @@ window.onload = function(){
         core.keybind(50, 'two');
         core.keybind(51, 'three');
         core.keybind(52, 'four');
-        var gameBackgroundImg = new Sprite( 800, 1000 );
+        var gameBackgroundImg = new Sprite( 900, 1300 );
         gameBackgroundImg.image = core.assets['image/background.jpg'];
         demon.sp = new Sprite(32,32);
         demon.sp.image = core.assets['chara1.png'];
@@ -77,16 +78,18 @@ window.onload = function(){
                 var sprite = new Sprite(data.room_width, data.room_height);
                 console.log(room);
                 room.addChild(sprite);
-                sprite.x = data.pos_x+50;
-                sprite.y = data.pos_y+300*(data.floor-1)+80;
+                sprite.x = data.pos_x+120;
+                sprite.y = data.pos_y+550*(data.floor-1)+80;
                 var roomNumber = new Label();
                 roomNumber.text = index + 1;
-                roomNumber.x = data.pos_x+53;
-                roomNumber.y = data.pos_y+300*(data.floor-1)+83;
+                roomNumber.x = data.pos_x+123;
+                roomNumber.y = data.pos_y+550*(data.floor-1)+83;
                 room.addChild(roomNumber);
-                // Surfaceオブジェクトを生成しスプライトに連結
-                var surface = new Surface( data.room_width, data.room_height);
-                sprite.image = surface;
+                if(data.category === "normal"){
+                    sprite.image = core.assets['image/normal_classroom.png'];
+                }else if(data.category === "special"){
+                    sprite.image = core.assets['image/special_classroom.png'];
+                }
                 sprite.on('touchstart', function(){
                     _movingCharacter=movingCharacter;
                     if(_movingCharacter.room == room) return;
@@ -116,7 +119,6 @@ window.onload = function(){
                     console.log(room);
                 });
                 map.addChild(room);
-                surface.context.strokeRect (0, 0, data.room_width, data.room_height);
             });
             baseDistance = 1/(Math.sqrt(Math.pow(map.lastChild.firstChild.x-map.firstChild.firstChild.x, 2)+Math.pow(map.lastChild.firstChild.y-map.firstChild.firstChild.y, 2))+100*(mapJson.floorNumber-1));
         });

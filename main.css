@@ -40,6 +40,6 @@ li.game a:hover {
     padding: 10px;
 }
 
-img{
-	width: 100%;
+.game-page{
+	background-image: url('image/home-background.jpg');
 }

@@ -3,228 +3,527 @@
     "floorNumber": 2,
     "mapData": [
         {
-            "pos_x": 0,
+            "pos_x": 30,
             "pos_y": 0,
             "floor": 1,
-            "room_width": 80,
-            "room_height": 110
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
         },
         {
-            "pos_x": 80,
+            "pos_x": 102,
             "pos_y": 0,
             "floor": 1,
-            "room_width": 80,
-            "room_height": 110
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
         },
         {
-            "pos_x": 160,
+            "pos_x": 203,
             "pos_y": 0,
             "floor": 1,
-            "room_width": 80,
-            "room_height": 110
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
         },
         {
-            "pos_x": 240,
+            "pos_x": 275,
             "pos_y": 0,
             "floor": 1,
-            "room_width": 80,
-            "room_height": 110
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
         },
         {
-            "pos_x": 320,
+            "pos_x": 347,
             "pos_y": 0,
             "floor": 1,
-            "room_width": 80,
-            "room_height": 110
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
         },
         {
-            "pos_x": 400,
+            "pos_x": 419,
             "pos_y": 0,
             "floor": 1,
-            "room_width": 80,
-            "room_height": 110
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
         },
         {
-            "pos_x": 480,
+            "pos_x": 520,
             "pos_y": 0,
             "floor": 1,
-            "room_width": 80,
-            "room_height": 110
+            "room_width": 87,
+            "room_height": 120,
+            "category": "special"
         },
         {
-            "pos_x": 560,
+            "pos_x": 607,
             "pos_y": 0,
             "floor": 1,
-            "room_width": 80,
-            "room_height": 110
+            "room_width": 87,
+            "room_height": 120,
+            "category": "special"
         },
         {
-            "pos_x": 0,
-            "pos_y": 110,
+            "pos_x": 30,
+            "pos_y": 120,
             "floor": 1,
-            "room_width": 80,
-            "room_height": 110
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
         },
         {
-            "pos_x": 80,
-            "pos_y": 110,
+            "pos_x": 102,
+            "pos_y": 120,
             "floor": 1,
-            "room_width": 80,
-            "room_height": 110
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
         },
         {
-            "pos_x": 160,
-            "pos_y": 110,
+            "pos_x": 203,
+            "pos_y": 120,
             "floor": 1,
-            "room_width": 80,
-            "room_height": 110
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
         },
         {
-            "pos_x": 240,
-            "pos_y": 110,
+            "pos_x": 275,
+            "pos_y": 120,
             "floor": 1,
-            "room_width": 80,
-            "room_height": 110
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
         },
         {
-            "pos_x": 320,
-            "pos_y": 110,
+            "pos_x": 347,
+            "pos_y": 120,
             "floor": 1,
-            "room_width": 80,
-            "room_height": 110
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
         },
         {
-            "pos_x": 400,
-            "pos_y": 110,
+            "pos_x": 419,
+            "pos_y": 120,
             "floor": 1,
-            "room_width": 80,
-            "room_height": 110
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
         },
         {
-            "pos_x": 480,
-            "pos_y": 110,
+            "pos_x": 520,
+            "pos_y": 120,
             "floor": 1,
-            "room_width": 80,
-            "room_height": 110
+            "room_width": 87,
+            "room_height": 120,
+            "category": "special"
         },
         {
-            "pos_x": 560,
-            "pos_y": 110,
+            "pos_x": 607,
+            "pos_y": 120,
             "floor": 1,
-            "room_width": 80,
-            "room_height": 110
-        },
-        {
-            "pos_x": 0,
-            "pos_y": 0,
-            "floor": 2,
-            "room_width": 80,
-            "room_height": 110
-        },
-        {
-            "pos_x": 80,
-            "pos_y": 0,
-            "floor": 2,
-            "room_width": 80,
-            "room_height": 110
-        },
-        {
-            "pos_x": 160,
-            "pos_y": 0,
-            "floor": 2,
-            "room_width": 80,
-            "room_height": 110
-        },
-        {
-            "pos_x": 240,
-            "pos_y": 0,
-            "floor": 2,
-            "room_width": 80,
-            "room_height": 110
-        },
-        {
-            "pos_x": 320,
-            "pos_y": 0,
-            "floor": 2,
-            "room_width": 80,
-            "room_height": 110
-        },
-        {
-            "pos_x": 400,
-            "pos_y": 0,
-            "floor": 2,
-            "room_width": 80,
-            "room_height": 110
-        },
-        {
-            "pos_x": 480,
-            "pos_y": 0,
-            "floor": 2,
-            "room_width": 80,
-            "room_height": 110
-        },
-        {
-            "pos_x": 560,
-            "pos_y": 0,
-            "floor": 2,
-            "room_width": 80,
-            "room_height": 110
+            "room_width": 87,
+            "room_height": 120,
+            "category": "special"
         },
         {
             "pos_x": 0,
-            "pos_y": 110,
-            "floor": 2,
-            "room_width": 80,
-            "room_height": 110
+            "pos_y": 288,
+            "floor": 1,
+            "room_width": 87,
+            "room_height": 120,
+            "category": "special"
         },
         {
-            "pos_x": 80,
-            "pos_y": 110,
-            "floor": 2,
-            "room_width": 80,
-            "room_height": 110
+            "pos_x": 87,
+            "pos_y": 288,
+            "floor": 1,
+            "room_width": 87,
+            "room_height": 120,
+            "category": "special"
         },
         {
-            "pos_x": 160,
-            "pos_y": 110,
-            "floor": 2,
-            "room_width": 80,
-            "room_height": 110
+            "pos_x": 203,
+            "pos_y": 288,
+            "floor": 1,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
         },
         {
-            "pos_x": 240,
-            "pos_y": 110,
-            "floor": 2,
-            "room_width": 80,
-            "room_height": 110
+            "pos_x": 275,
+            "pos_y": 288,
+            "floor": 1,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
         },
         {
-            "pos_x": 320,
-            "pos_y": 110,
-            "floor": 2,
-            "room_width": 80,
-            "room_height": 110
+            "pos_x": 347,
+            "pos_y": 288,
+            "floor": 1,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
         },
         {
-            "pos_x": 400,
-            "pos_y": 110,
-            "floor": 2,
-            "room_width": 80,
-            "room_height": 110
+            "pos_x": 419,
+            "pos_y": 288,
+            "floor": 1,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
         },
         {
-            "pos_x": 480,
-            "pos_y": 110,
-            "floor": 2,
-            "room_width": 80,
-            "room_height": 110
+            "pos_x": 520,
+            "pos_y": 288,
+            "floor": 1,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
         },
         {
-            "pos_x": 560,
-            "pos_y": 110,
+            "pos_x": 592,
+            "pos_y": 288,
+            "floor": 1,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 0,
+            "pos_y": 408,
+            "floor": 1,
+            "room_width": 87,
+            "room_height": 120,
+            "category": "special"
+        },
+        {
+            "pos_x": 87,
+            "pos_y": 408,
+            "floor": 1,
+            "room_width": 87,
+            "room_height": 120,
+            "category": "special"
+        },
+        {
+            "pos_x": 203,
+            "pos_y": 408,
+            "floor": 1,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 275,
+            "pos_y": 408,
+            "floor": 1,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 347,
+            "pos_y": 408,
+            "floor": 1,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 419,
+            "pos_y": 408,
+            "floor": 1,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 520,
+            "pos_y": 408,
+            "floor": 1,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 592,
+            "pos_y": 408,
+            "floor": 1,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+
+
+
+
+
+
+
+
+
+
+
+        {
+            "pos_x": 0,
+            "pos_y": 0,
             "floor": 2,
-            "room_width": 80,
-            "room_height": 110
+            "room_width": 87,
+            "room_height": 120,
+            "category": "special"
+        },
+        {
+            "pos_x": 87,
+            "pos_y": 0,
+            "floor": 2,
+            "room_width": 87,
+            "room_height": 120,
+            "category": "special"
+        },
+        {
+            "pos_x": 203,
+            "pos_y": 0,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 275,
+            "pos_y": 0,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 347,
+            "pos_y": 0,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 419,
+            "pos_y": 0,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 520,
+            "pos_y": 0,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 592,
+            "pos_y": 0,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 0,
+            "pos_y": 120,
+            "floor": 2,
+            "room_width": 87,
+            "room_height": 120,
+            "category": "special"
+        },
+        {
+            "pos_x": 87,
+            "pos_y": 120,
+            "floor": 2,
+            "room_width": 87,
+            "room_height": 120,
+            "category": "special"
+        },
+        {
+            "pos_x": 203,
+            "pos_y": 120,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 275,
+            "pos_y": 120,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 347,
+            "pos_y": 120,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 419,
+            "pos_y": 120,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 520,
+            "pos_y": 120,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 592,
+            "pos_y": 120,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 30,
+            "pos_y": 288,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 102,
+            "pos_y": 288,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 203,
+            "pos_y": 288,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 275,
+            "pos_y": 288,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 347,
+            "pos_y": 288,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 419,
+            "pos_y": 288,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 520,
+            "pos_y": 288,
+            "floor": 2,
+            "room_width": 87,
+            "room_height": 120,
+            "category": "special"
+        },
+        {
+            "pos_x": 607,
+            "pos_y": 288,
+            "floor": 2,
+            "room_width": 87,
+            "room_height": 120,
+            "category": "special"
+        },
+        {
+            "pos_x": 30,
+            "pos_y": 408,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 102,
+            "pos_y": 408,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 203,
+            "pos_y": 408,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 275,
+            "pos_y": 408,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 347,
+            "pos_y": 408,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 419,
+            "pos_y": 408,
+            "floor": 2,
+            "room_width": 72,
+            "room_height": 120,
+            "category": "normal"
+        },
+        {
+            "pos_x": 520,
+            "pos_y": 408,
+            "floor": 2,
+            "room_width": 87,
+            "room_height": 120,
+            "category": "special"
+        },
+        {
+            "pos_x": 607,
+            "pos_y": 408,
+            "floor": 2,
+            "room_width": 87,
+            "room_height": 120,
+            "category": "special"
         }
     ]
 }
