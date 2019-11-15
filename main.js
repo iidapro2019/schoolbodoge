@@ -40,7 +40,6 @@ window.onload = function(){
     core._pageY = 80;
     core._pageX = left;
     core.onload = function(){
-        core.keybind(32, 'space');
         core.keybind(49, 'one');
         core.keybind(50, 'two');
         core.keybind(51, 'three');
@@ -270,27 +269,26 @@ window.onload = function(){
 
             scene.addEventListener('enterframe', function(e) {
                 if (core.input.one && playerList[1].status === "escape"){
-                    console.log(sound._state);
                     changeMovingCharacter(playerList[1]);
                     if(sound._state) sound.stop();
                 }
                 if (core.input.two && playerList[2].status === "escape"){
-                    console.log(sound._state);
                     changeMovingCharacter(playerList[2]);
                      if(sound._state) sound.stop();
                 }
                 if (core.input.three && playerList[3].status === "escape"){
-                    console.log(sound._state);
                     changeMovingCharacter(playerList[3]);
                     if(sound._state) sound.stop();
                 }
                 if (core.input.four && playerList[4].status === "escape"){
-                    console.log(sound._state);
                     changeMovingCharacter(playerList[4]);
                     if(sound._state) sound.stop();
                 }
-                if (core.input.space){
-                    if(sound._state) return;
+            });
+            addEventListener('keydown', function(e){
+                if(e.keyCode === 32 && sceneNumber === 4){
+                    e.preventDefault();
+                    if(sound._state) return sound.stop();
 
                     distance = (Math.sqrt(Math.pow(demon.room.world_x-movingCharacter.room.world_x, 2)+Math.pow(demon.room.world_y-movingCharacter.room.world_y, 2))+300*Math.abs(demon.room.floor-movingCharacter.room.floor))*baseDistance;
                     threeTimesDistance = distance*3;
@@ -300,7 +298,7 @@ window.onload = function(){
                     sound.play();
                     sound.src.loop = true;
                 }
-           });
+            });
 
             return scene;
         };
