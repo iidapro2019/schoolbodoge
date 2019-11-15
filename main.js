@@ -73,21 +73,19 @@ window.onload = function(){
         selectFrame.image = core.assets['select.png'];
         $.getJSON("map.json" , function(mapJson) {
             $.each(mapJson["mapData"], function(index, data){
-                // console.log(data);
                 var room = new Group();
                 room.characters = new Array();
                 room.floor = data.floor;
                 room.world_x = data.pos_x;
                 room.world_y = data.pos_y;
                 var sprite = new Sprite(data.room_width, data.room_height);
-                console.log(room);
                 room.addChild(sprite);
                 sprite.x = data.pos_x+120;
-                sprite.y = data.pos_y+550*(data.floor-1)+80;
+                sprite.y = data.pos_y+560*(data.floor-1)+90;
                 var roomNumber = new Label();
                 roomNumber.text = index + 1;
                 roomNumber.x = data.pos_x+123;
-                roomNumber.y = data.pos_y+550*(data.floor-1)+83;
+                roomNumber.y = data.pos_y+560*(data.floor-1)+93;
                 room.addChild(roomNumber);
                 if(data.category === "normal"){
                     sprite.image = core.assets['image/normal_classroom.png'];
@@ -150,15 +148,17 @@ window.onload = function(){
             scene.addChild(gameBackgroundImg);
             var captionLabel = new Label();
             scene.addChild(captionLabel);
-            captionLabel.x = 10;
-            captionLabel.y = 10;
+            captionLabel.x = 12;
+            captionLabel.y = 12;
             captionLabel.text = 'キャラ選択'
+            captionLabel.font = '20px Palatino';
             for(let i = 0; i < characterList.length; i++){
                 let playerLabel = new Label();
                 scene.addChild(playerLabel);
                 playerLabel.text = characterList[i].name;
                 playerLabel.x = 280*(i%2)+80;
                 playerLabel.y = 80*(Math.floor(i/2)+1);
+                playerLabel.font = '20px Palatino';
                 characterList[i].sp.x = playerLabel.x-30;
                 characterList[i].sp.y = playerLabel.y-5;
                 scene.addChild(characterList[i].sp);
@@ -177,7 +177,8 @@ window.onload = function(){
             scene.addChild(nextLabel);
             nextLabel.text = '次へ';
             nextLabel.x = 650;
-            nextLabel.y = 10;
+            nextLabel.y = 12;
+            nextLabel.font = '20px Palatino';
             nextLabel.on('touchstart', function(){
                 if(playerList.length >= 5){
                     randomRooms = randomSelect(map.childNodes, playerList.length);
@@ -202,13 +203,15 @@ window.onload = function(){
             scene.addChild(gameBackgroundImg);
             var captionLabel = new Label();
             scene.addChild(captionLabel);
-            captionLabel.x = 10;
-            captionLabel.y = 10;
+            captionLabel.x = 12;
+            captionLabel.y = 12;
             captionLabel.text = '鬼フェーズ：'+turn+'ターン目';
+            captionLabel.font = '20px Palatino';
             movingCharacterLabel = new Label();
             scene.addChild(movingCharacterLabel);
-            movingCharacterLabel.x = 10;
-            movingCharacterLabel.y = 40;
+            movingCharacterLabel.x = 17;
+            movingCharacterLabel.y = 42;
+            movingCharacterLabel.font = '16px Palatino';
             for(let i = 0; i < playerList.length; i++){
                 scene.addChild(playerList[i].sp);
                 scene.addChild(playerList[i].top);
@@ -217,8 +220,9 @@ window.onload = function(){
             var nextLabel = new Label();
             scene.addChild(nextLabel);
             nextLabel.text = '生徒フェーズへ'
-            nextLabel.x = 600;
-            nextLabel.y = 10;
+            nextLabel.x = 740;
+            nextLabel.y = 22;
+            nextLabel.font = '20px Palatino';
             nextLabel.on('touchstart', function(){
                 core.replaceScene(createStudentPhaseScene());
             });
@@ -235,13 +239,15 @@ window.onload = function(){
             scene.addChild(gameBackgroundImg);
             var captionLabel = new Label();
             scene.addChild(captionLabel);
-            captionLabel.x = 10;
-            captionLabel.y = 10;
+            captionLabel.x = 12;
+            captionLabel.y = 12;
             captionLabel.text = '生徒フェーズ：'+turn+'ターン目';
+            captionLabel.font = '20px Palatino';
             movingCharacterLabel = new Label();
             scene.addChild(movingCharacterLabel);
-            movingCharacterLabel.x = 10;
-            movingCharacterLabel.y = 40;
+            movingCharacterLabel.x = 17;
+            movingCharacterLabel.y = 42;
+            movingCharacterLabel.font = '16px Palatino';
             scene.addChild(selectFrame);
             changeMovingCharacter(playerList.find(chara => chara.status === 'escape'));
             for(let i = 0; i < playerList.length; i++){
@@ -259,8 +265,9 @@ window.onload = function(){
             var nextLabel = new Label();
             scene.addChild(nextLabel);
             nextLabel.text = '鬼フェーズへ'
-            nextLabel.x = 600;
-            nextLabel.y = 10;
+            nextLabel.x = 740;
+            nextLabel.y = 22;
+            nextLabel.font = '20px Palatino';
             nextLabel.on('touchstart', function(){
                 if(sound._state) sound.stop();
                 core.replaceScene(createDemonPhaseScene());
@@ -321,14 +328,16 @@ window.onload = function(){
             if(chara == demon) topSp.image = core.assets['chara1.png'];
             else topSp.image = core.assets['chara/chara.png'];
             topSp.frame = chara.sp.frame;
-            topSp.x = 200 + num * 80;
-            topSp.y = 7;
+            topSp.x = 270 + num * 80;
+            if(chara !== demon) topSp.x += 30;
+            topSp.y = 9;
             chara.top.addChild(topSp);
             var topLabel = new Label();
             topLabel.text = chara.name;
             topLabel.textAlign = 'center';
-            topLabel.x = 65 + num * 80;
-            topLabel.y = 40;
+            topLabel.x = 135 + num * 80;
+            if(chara !== demon) topLabel.x += 30;
+            topLabel.y = 42;
             chara.top.addChild(topLabel);
         }
         function changeMovingCharacter(chara){
