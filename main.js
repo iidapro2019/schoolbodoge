@@ -102,12 +102,12 @@ window.onload = function(){
 
                     if (sound.src.loop) sound.stop();
                     _movingCharacter.room.characters = _movingCharacter.room.characters.filter(n => n !== _movingCharacter);
-                    if(sceneNumber == 3){
+                    if(sceneNumber == 3 && turn >= 2){
                         room.characters.forEach(chara => { if(chara.status == 'escape' && confirm(`${chara.name}を捕まえます。`)){
                             chara.status = 'caught';
                             if(!playerList.some(chara => chara.status === 'escape')) core.replaceScene(createResultScene());
                         }});
-                    }else if(sceneNumber == 4){
+                    }else if(sceneNumber == 4 && turn >= 2){
                         if(room.characters.includes(demon) && confirm(`${_movingCharacter.name}を捕まえます。`)){
                             _movingCharacter.status = 'caught';
                             if(playerList.some(chara => chara.status === 'escape')) changeMovingCharacter(playerList.find(chara => chara.status === 'escape'));
@@ -308,15 +308,29 @@ window.onload = function(){
         var createResultScene = function(){
             sceneNumber = 5;
             var scene = new Scene();
-            scene.backgroundColor = '#999999';
+            scene.addChild(gameBackgroundImg);
             var captionLabel = new Label();
-            captionLabel.x = 250;
-            captionLabel.y = 280;
+            captionLabel.x = 300;
+            captionLabel.y = 130;
             scene.addChild(captionLabel);
             captionLabel.text = 'リザルト';
-            captionLabel.font = '40px Palatino';
+            captionLabel.font = '60px Palatino';
+            captionLabel.textAlign = 'center';
+            var turnResultLabel = new Label();
+            turnResultLabel.x = 110;
+            turnResultLabel.y = 220;
+            scene.addChild(turnResultLabel);
+            turnResultLabel.text = `経過ターン：${turn}ターン`;
+            turnResultLabel.font = '35px Palatino';
+            var remainingResultLabel = new Label();
+            remainingResultLabel.x = 110;
+            remainingResultLabel.y = 280;
+            scene.addChild(remainingResultLabel);
+            remainingResultLabel.text = `生徒残り数：${playerList.filter(chara => chara.status === 'escape').length}`;
+            remainingResultLabel.font = '35px Palatino';
             return scene;
         };
+
         function createTop(chara, num){
             chara.top = new Group();
             var topSp = new Sprite(32,32);
@@ -335,6 +349,7 @@ window.onload = function(){
             topLabel.y = 42;
             chara.top.addChild(topLabel);
         }
+
         function changeMovingCharacter(chara){
             movingCharacter = chara;
             movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
