@@ -84,9 +84,11 @@ window.onload = function(){
                 sprite.y = data.pos_y+560*(data.floor-1)+90;
                 var roomNumber = new Label();
                 roomNumber.text = index + 1;
-                roomNumber.x = data.pos_x+123;
-                roomNumber.y = data.pos_y+560*(data.floor-1)+93;
+                roomNumber.x = data.pos_x+125;
+                roomNumber.y = data.pos_y+560*(data.floor-1)+95;
                 room.addChild(roomNumber);
+                roomNumber.font = 'italic 16px Palatino';
+                roomNumber.color = 'white';
                 if(data.category === "normal"){
                     sprite.image = core.assets['image/normal_classroom.png'];
                 }else if(data.category === "special"){
@@ -114,11 +116,8 @@ window.onload = function(){
                     room.characters.push(_movingCharacter);
                     for(let i = 0; i < playerList.length; i++){
                         playerList[i].sp.x = playerList[i].room.firstChild.x+30*((playerList[i].room.characters.indexOf(playerList[i]))%2);
-                        playerList[i].sp.y = playerList[i].room.firstChild.y+15+35*Math.floor((playerList[i].room.characters.indexOf(playerList[i]))/2);
+                        playerList[i].sp.y = playerList[i].room.firstChild.y+19+35*Math.floor((playerList[i].room.characters.indexOf(playerList[i]))/2);
                     }
-                    console.log(_movingCharacter.name+"は(x:"+sprite.x+", y:"+sprite.y+")に移動した");
-                    console.log(map);
-                    console.log(room);
                 });
                 map.addChild(room);
             });
@@ -156,7 +155,7 @@ window.onload = function(){
                 let playerLabel = new Label();
                 scene.addChild(playerLabel);
                 playerLabel.text = characterList[i].name;
-                playerLabel.x = 280*(i%2)+80;
+                playerLabel.x = 280*(i%2)+110;
                 playerLabel.y = 80*(Math.floor(i/2)+1);
                 playerLabel.font = '20px Palatino';
                 characterList[i].sp.x = playerLabel.x-30;
@@ -164,15 +163,10 @@ window.onload = function(){
                 scene.addChild(characterList[i].sp);
                 $(playerLabel).one('touchstart', function(){
                     playerList.push(characterList[i]);
-                    console.log(characterList[i].sp);
                     characterList[i].sp.className = "chara";
                     playerLabel.text = playerList.length+playerLabel.text;
                 });
             };
-            // scene.addChild(characterList[3].sp);
-            // scene.on('touchstart', function(){
-            //     console.log(playerList);
-            // });
             var nextLabel = new Label();
             scene.addChild(nextLabel);
             nextLabel.text = '次へ';
@@ -186,8 +180,7 @@ window.onload = function(){
                         playerList[i].room = randomRooms[i];
                         randomRooms[i].characters.push(playerList[i]);
                         playerList[i].sp.x = playerList[i].room.firstChild.x+30*((playerList[i].room.characters.indexOf(playerList[i]))%2);
-                        playerList[i].sp.y = playerList[i].room.firstChild.y+15+35*Math.floor((playerList[i].room.characters.indexOf(playerList[i]))/2);
-                        playerList[i]
+                        playerList[i].sp.y = playerList[i].room.firstChild.y+19+35*Math.floor((playerList[i].room.characters.indexOf(playerList[i]))/2);
                         createTop(playerList[i], i);
                     };
                     core.replaceScene(createDemonPhaseScene());
