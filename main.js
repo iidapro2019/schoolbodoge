@@ -4,7 +4,7 @@ window.onload = function(){
     var core = new Core(900, 1300);
     var turn = 0;
     var sceneNumber = 0;
-    core.preload(['chara1.png', 'select.png', 'image/background.jpg', 'image/normal_classroom.png', 'image/special_classroom.png', 'Heart_1.wav', 'Heart_2.wav', 'Heart_3.wav']);
+    core.preload(['chara1.png', 'chara/chara.png', 'select.png', 'image/background.jpg', 'image/normal_classroom.png', 'image/special_classroom.png', 'Heart_1.wav', 'Heart_2.wav', 'Heart_3.wav']);
  
     var characterList = [
         {
@@ -52,7 +52,7 @@ window.onload = function(){
         demon.sp.frame = 5;
         for(let i = 0; i < characterList.length; i++){
             characterList[i].sp = new Sprite(32,32);
-            characterList[i].sp.image = core.assets['chara1.png'];
+            characterList[i].sp.image = core.assets['chara/chara.png'];
             characterList[i].sp.frame = i;
             let currentStatus = characterList[i].status;
             Object.defineProperty(characterList[i], 'status', {
@@ -78,6 +78,8 @@ window.onload = function(){
                 var room = new Group();
                 room.characters = new Array();
                 room.floor = data.floor;
+                room.world_x = data.pos_x;
+                room.world_y = data.pos_y;
                 var sprite = new Sprite(data.room_width, data.room_height);
                 console.log(room);
                 room.addChild(sprite);
@@ -123,7 +125,7 @@ window.onload = function(){
                 });
                 map.addChild(room);
             });
-            baseDistance = 1/(Math.sqrt(Math.pow(map.lastChild.firstChild.x-map.firstChild.firstChild.x, 2)+Math.pow(map.lastChild.firstChild.y-map.firstChild.firstChild.y, 2))+100*(mapJson.floorNumber-1));
+            baseDistance = 1/(Math.sqrt(Math.pow(map.lastChild.world_x-map.firstChild.world_x, 2)+Math.pow(map.lastChild.world_y-map.firstChild.world_y, 2))+300*(mapJson.floorNumber-1));
         });
 
 
@@ -209,13 +211,6 @@ window.onload = function(){
             movingCharacterLabel.x = 10;
             movingCharacterLabel.y = 40;
             for(let i = 0; i < playerList.length; i++){
-                // let playerLabel = new Label();
-                // scene.addChild(playerLabel);
-                // playerLabel.text = playerList[i].name;
-                // playerLabel.x = 100*(i%2)+40;
-                // playerLabel.y = 35*(Math.floor(i/2)+1);
-                // playerList[i].sp.x = -10;
-                // playerList[i].sp.y = -10;
                 scene.addChild(playerList[i].sp);
                 scene.addChild(playerList[i].top);
             };
@@ -251,13 +246,6 @@ window.onload = function(){
             scene.addChild(selectFrame);
             changeMovingCharacter(playerList.find(chara => chara.status === 'escape'));
             for(let i = 0; i < playerList.length; i++){
-                // let playerLabel = new Label();
-                // scene.addChild(playerLabel);
-                // playerLabel.text = playerList[i].name;
-                // playerLabel.x = 100*(i%2)+40;
-                // playerLabel.y = 35*(Math.floor(i/2)+1);
-                // playerList[i].sp.x = -10;
-                // playerList[i].sp.y = -10;
                 scene.addChild(playerList[i].sp);
                 scene.addChild(playerList[i].top);
                 if(i == 0) continue;
@@ -275,6 +263,7 @@ window.onload = function(){
             nextLabel.x = 600;
             nextLabel.y = 10;
             nextLabel.on('touchstart', function(){
+                if(sound._state) sound.stop();
                 core.replaceScene(createDemonPhaseScene());
             });
             scene.addChild(map);
@@ -303,12 +292,11 @@ window.onload = function(){
                 if (core.input.space){
                     if(sound._state) return;
 
-                    distance = (Math.sqrt(Math.pow(demon.room.firstChild.x-movingCharacter.room.firstChild.x, 2)+Math.pow(demon.room.firstChild.y-movingCharacter.room.firstChild.y, 2))+100*Math.abs(movingCharacter.room.floor-demon.room.floor))*baseDistance;
-                    normalizationDistance = Math.floor(distance*2+1);
-                    // console.log(normalizationDistance);
-                    if(normalizationDistance >= 3) sound = core.assets['Heart_1.wav'];
-                    if(normalizationDistance == 2) sound = core.assets['Heart_2.wav'];
-                    if(normalizationDistance == 1) sound = core.assets['Heart_3.wav'];
+                    distance = (Math.sqrt(Math.pow(demon.room.world_x-movingCharacter.room.world_x, 2)+Math.pow(demon.room.world_y-movingCharacter.room.world_y, 2))+300*Math.abs(demon.room.floor-movingCharacter.room.floor))*baseDistance;
+                    threeTimesDistance = distance*3;
+                    if(threeTimesDistance <= 1) sound = core.assets['Heart_3.wav'];
+                    else if(threeTimesDistance <= 2) sound = core.assets['Heart_2.wav'];
+                    else if(threeTimesDistance <= 3) sound = core.assets['Heart_1.wav'];
                     sound.play();
                     sound.src.loop = true;
                 }
@@ -332,7 +320,8 @@ window.onload = function(){
         function createTop(chara, num){
             chara.top = new Group();
             var topSp = new Sprite(32,32);
-            topSp.image = core.assets['chara1.png'];
+            if(chara == demon) topSp.image = core.assets['chara1.png'];
+            else topSp.image = core.assets['chara/chara.png'];
             topSp.frame = chara.sp.frame;
             topSp.x = 200 + num * 80;
             topSp.y = 7;
