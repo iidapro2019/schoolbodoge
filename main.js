@@ -59,8 +59,10 @@ window.onload = function(){
                 set: newValue => {
                     currentStatus = newValue;
                     if(newValue==='caught'){
-                        characterList[i].sp.opacity = 0.3;
-                        characterList[i].top.firstChild.opacity = 0.3;
+                        characterList[i].sp.frame = i+4;
+                        characterList[i].sp.opacity = 0.7;
+                        characterList[i].top.firstChild.frame = i+4;
+                        characterList[i].top.firstChild.opacity = 0.7;
                     }
                 },
                 configurable: true
@@ -115,7 +117,7 @@ window.onload = function(){
                     _movingCharacter.room = room;
                     room.characters.push(_movingCharacter);
                     for(let i = 0; i < playerList.length; i++){
-                        playerList[i].sp.x = playerList[i].room.firstChild.x+30*((playerList[i].room.characters.indexOf(playerList[i]))%2);
+                        playerList[i].sp.x = playerList[i].room.firstChild.x+3+27*((playerList[i].room.characters.indexOf(playerList[i]))%2);
                         playerList[i].sp.y = playerList[i].room.firstChild.y+19+35*Math.floor((playerList[i].room.characters.indexOf(playerList[i]))/2);
                     }
                 });
@@ -179,7 +181,7 @@ window.onload = function(){
                     for(let i = 0; i < playerList.length; i++){
                         playerList[i].room = randomRooms[i];
                         randomRooms[i].characters.push(playerList[i]);
-                        playerList[i].sp.x = playerList[i].room.firstChild.x+30*((playerList[i].room.characters.indexOf(playerList[i]))%2);
+                        playerList[i].sp.x = playerList[i].room.firstChild.x+3+27*((playerList[i].room.characters.indexOf(playerList[i]))%2);
                         playerList[i].sp.y = playerList[i].room.firstChild.y+19+35*Math.floor((playerList[i].room.characters.indexOf(playerList[i]))/2);
                         createTop(playerList[i], i);
                     };
