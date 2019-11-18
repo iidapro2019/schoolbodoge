@@ -265,7 +265,12 @@ window.onload = function(){
             nextLabel.font = '20px Palatino';
             nextLabel.on('touchstart', function(){
                 if(sound._state) sound.stop();
-                core.replaceScene(createDemonPhaseScene());
+                if(turn === 14){
+                    alert("14ターンが経過しました。ゲームを終了します。");
+                    core.replaceScene(createResultScene());
+                }else{
+                    core.replaceScene(createDemonPhaseScene());
+                }
             });
             scene.addChild(map);
 
@@ -320,13 +325,14 @@ window.onload = function(){
             turnResultLabel.x = 110;
             turnResultLabel.y = 220;
             scene.addChild(turnResultLabel);
+            turnResultLabel.width = 400;
             turnResultLabel.text = `経過ターン：${turn}ターン`;
             turnResultLabel.font = '35px Palatino';
             var remainingResultLabel = new Label();
             remainingResultLabel.x = 110;
             remainingResultLabel.y = 280;
             scene.addChild(remainingResultLabel);
-            remainingResultLabel.text = `生徒残り数：${playerList.filter(chara => chara.status === 'escape').length}`;
+            remainingResultLabel.text = `生徒残り数：${playerList.filter(chara => chara.status === 'escape').length}人`;
             remainingResultLabel.font = '35px Palatino';
             return scene;
         };
