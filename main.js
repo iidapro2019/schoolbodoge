@@ -69,6 +69,7 @@ window.onload = function(){
             });
         }
         var map = new Group();
+        var floorLabels = new Group();
         var baseDistance = 0;
         var sound = core.assets['Heart_1.wav'];
         var selectFrame = new Sprite(32, 32);
@@ -123,6 +124,16 @@ window.onload = function(){
                 });
                 map.addChild(room);
             });
+
+            for(let i = 0; i < mapJson["floorNumber"]; i++){
+                var floorLabel = new Label();
+                floorLabel.text = `${i+1}F`;
+                floorLabel.x = 40;
+                floorLabel.y = 105+560*(i);
+                floorLabel.font = 'italic 35px Palatino';
+                floorLabel.color = 'white';
+                floorLabels.addChild(floorLabel);
+            }
             baseDistance = 1/(Math.sqrt(Math.pow(map.lastChild.world_x-map.firstChild.world_x, 2)+Math.pow(map.lastChild.world_y-map.firstChild.world_y, 2))+300*(mapJson.floorNumber-1));
         });
 
@@ -224,6 +235,7 @@ window.onload = function(){
             scene.addChild(selectFrame);
             changeMovingCharacter(demon);
             scene.addChild(map);
+            scene.addChild(floorLabels);
             
             return scene;
         };
@@ -273,6 +285,7 @@ window.onload = function(){
                 }
             });
             scene.addChild(map);
+            scene.addChild(floorLabels);
 
             scene.addEventListener('enterframe', function(e) {
                 if (core.input.one && playerList[1].status === "escape"){
