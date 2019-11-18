@@ -4,7 +4,7 @@ window.onload = function(){
     var core = new Core(900, 1300);
     var turn = 0;
     var sceneNumber = 0;
-    core.preload(['chara1.png', 'chara/chara.png', 'select.png', 'image/background.jpg', 'image/normal_classroom.png', 'image/special_classroom.png', 'Heart_1.wav', 'Heart_2.wav', 'Heart_3.wav']);
+    core.preload(['chara/chara.png', 'select.png', 'image/background.jpg', 'image/normal_classroom.png', 'image/special_classroom.png', 'Heart_1.wav', 'Heart_2.wav', 'Heart_3.wav']);
  
     var characterList = [
         {
@@ -47,8 +47,8 @@ window.onload = function(){
         var gameBackgroundImg = new Sprite( 900, 1300 );
         gameBackgroundImg.image = core.assets['image/background.jpg'];
         demon.sp = new Sprite(32,32);
-        demon.sp.image = core.assets['chara1.png'];
-        demon.sp.frame = 5;
+        demon.sp.image = core.assets['chara/chara.png'];
+        demon.sp.frame = 8;
         for(let i = 0; i < characterList.length; i++){
             characterList[i].sp = new Sprite(32,32);
             characterList[i].sp.image = core.assets['chara/chara.png'];
@@ -340,7 +340,7 @@ window.onload = function(){
         function createTop(chara, num){
             chara.top = new Group();
             var topSp = new Sprite(32,32);
-            if(chara == demon) topSp.image = core.assets['chara1.png'];
+            if(chara == demon) topSp.image = core.assets['chara/chara.png'];
             else topSp.image = core.assets['chara/chara.png'];
             topSp.frame = chara.sp.frame;
             topSp.x = 270 + num * 80;
