@@ -382,9 +382,9 @@ window.onload = function(){
         }
 
         function changeMovingCharacter(chara){
-            movingCharacter.status = 'escape'
+            if(movingCharacter.status === 'moving') movingCharacter.status = 'escape';
+            if(chara.status === 'escape') chara.status = 'moving';
             movingCharacter = chara;
-            chara.status = 'moving';
             movingCharacterLabel.text = `操作キャラ：${movingCharacter.name}`;
             selectFrame.x = movingCharacter.top.firstChild.x;
             selectFrame.y = movingCharacter.top.firstChild.y;
