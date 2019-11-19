@@ -48,21 +48,32 @@ window.onload = function(){
         gameBackgroundImg.image = core.assets['image/background.jpg'];
         demon.sp = new Sprite(32,32);
         demon.sp.image = core.assets['chara/chara.png'];
-        demon.sp.frame = 8;
+        demon.sp.frame = 24;
         for(let i = 0; i < characterList.length; i++){
+            let baseFrame = i*6;
             characterList[i].sp = new Sprite(32,32);
             characterList[i].sp.image = core.assets['chara/chara.png'];
-            characterList[i].sp.frame = i;
+            characterList[i].sp.frame = baseFrame;
             let currentStatus = characterList[i].status;
             Object.defineProperty(characterList[i], 'status', {
                 get: () => currentStatus,
                 set: newValue => {
                     currentStatus = newValue;
                     if(newValue==='caught'){
-                        characterList[i].sp.frame = i+4;
+                        characterList[i].sp.frame = baseFrame+1;
                         characterList[i].sp.opacity = 0.7;
-                        characterList[i].top.firstChild.frame = i+4;
+                        characterList[i].top.firstChild.frame = baseFrame+1;
                         characterList[i].top.firstChild.opacity = 0.7;
+                    }else if(newValue==='moving'){
+                        characterList[i].sp.frame = [baseFrame+2,baseFrame+2,baseFrame+3,baseFrame+3,baseFrame+4,baseFrame+4,baseFrame+5,baseFrame+5];
+                        characterList[i].sp.opacity = 1;
+                        characterList[i].top.firstChild.frame = [baseFrame+2,baseFrame+2,baseFrame+3,baseFrame+3,baseFrame+4,baseFrame+4,baseFrame+5,baseFrame+5];
+                        characterList[i].top.firstChild.opacity = 1;
+                    }else if(newValue==='escape'){
+                        characterList[i].sp.frame = baseFrame;
+                        characterList[i].sp.opacity = 1;
+                        characterList[i].top.firstChild.frame = baseFrame;
+                        characterList[i].top.firstChild.opacity = 1;
                     }
                 },
                 configurable: true
@@ -371,8 +382,10 @@ window.onload = function(){
         }
 
         function changeMovingCharacter(chara){
+            movingCharacter.status = 'escape'
             movingCharacter = chara;
-            movingCharacterLabel.text = '操作キャラ：'+movingCharacter.name;
+            chara.status = 'moving';
+            movingCharacterLabel.text = `操作キャラ：${movingCharacter.name}`;
             selectFrame.x = movingCharacter.top.firstChild.x;
             selectFrame.y = movingCharacter.top.firstChild.y;
         }
