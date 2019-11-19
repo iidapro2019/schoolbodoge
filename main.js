@@ -305,7 +305,9 @@ window.onload = function(){
                     if(sound._state) sound.stop();
                 }
             });
-            addEventListener('keydown', function(e){
+            $(window).on('keydown.space', function(e){
+                $(window).off('keydown.space');
+                console.log("aa");
                 if(e.keyCode === 32 && sceneNumber === 4){
                     e.preventDefault();
                     if(sound._state) return sound.stop();
