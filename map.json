@@ -1,6 +1,57 @@
 {
     "mapName": "廃校",
     "floorNumber": 2,
+    "exitData": [
+        {
+            "pos_x": 174,
+            "pos_y": 436,
+            "exit_width": 29,
+            "exit_height": 92,
+            "angle": 0
+        },
+        {
+            "pos_x": 491,
+            "pos_y": 0,
+            "exit_width": 29,
+            "exit_height": 92,
+            "angle": 180
+        }
+        
+    ],
+    "corridorData": [
+        {
+            "pos_x": 174,
+            "pos_y": 0,
+            "corridor_width": 29,
+            "corridor_height": 528,
+            "floor": 1
+
+        },
+        {
+            "pos_x": 491,
+            "pos_y": 0,
+            "corridor_width": 29,
+            "corridor_height": 528,
+            "floor": 1
+
+        },
+        {
+            "pos_x": 174,
+            "pos_y": 0,
+            "corridor_width": 29,
+            "corridor_height": 528,
+            "floor": 2
+
+        },
+        {
+            "pos_x": 491,
+            "pos_y": 0,
+            "corridor_width": 29,
+            "corridor_height": 528,
+            "floor": 2
+
+        }
+    ],
     "mapData": [
         {
             "pos_x": 30,
