@@ -152,7 +152,7 @@ window.onload = function(){
                 floorLabel.color = 'white';
                 floorLabels.addChild(floorLabel);
             }
-            
+
             $.each(mapJson["corridorData"], function(index, data){
                 var sprite = new Sprite(data.corridor_width, data.corridor_height);
                 sprite.image = core.assets['image/corridor.png'];
@@ -245,7 +245,7 @@ window.onload = function(){
             nextLabel.y = 12;
             nextLabel.font = '20px Palatino';
             nextLabel.on('touchstart', function(){
-                if(playerList.length >= 5){
+                if(playerList.length >= 4){
                     randomRooms = randomSelect(map.childNodes, playerList.length);
                     for(let i = 0; i < playerList.length; i++){
                         playerList[i].room = randomRooms[i];
@@ -360,7 +360,7 @@ window.onload = function(){
                     changeMovingCharacter(playerList[3]);
                     if(sound._state) sound.stop();
                 }
-                if (core.input.four && playerList[4].status === "escape"){
+                if (core.input.four && playerList.length===5 && playerList[4].status === "escape"){
                     changeMovingCharacter(playerList[4]);
                     if(sound._state) sound.stop();
                 }
