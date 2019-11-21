@@ -4,7 +4,7 @@ window.onload = function(){
     var core = new Core(900, 1300);
     var turn = 0;
     var sceneNumber = 0;
-    core.preload(['chara/chara.png', 'chara/select.png', 'mapimage/background.jpg', 'mapimage/normal_classroom.png', 'mapimage/special_classroom.png', 'mapimage/corridor.png', 'mapimage/escape_exit.png', 'heartwav/Heart_1.wav', 'heartwav/Heart_2.wav', 'heartwav/Heart_3.wav']);
+    core.preload(['gameassets/chara/chara.png', 'gameassets/chara/select.png', 'gameassets/mapimage/background.jpg', 'gameassets/mapimage/normal_classroom.png', 'gameassets/mapimage/special_classroom.png', 'gameassets/mapimage/corridor.png', 'gameassets/mapimage/escape_exit.png', 'gameassets/ui/gametop.jpg', 'gameassets/ui/nextbutton.png', 'gameassets/ui/todemonbutton.png', 'gameassets/ui/tostudentbutton.png', 'gameassets/heartwav/Heart_1.wav', 'gameassets/heartwav/Heart_2.wav', 'gameassets/heartwav/Heart_3.wav']);
  
     var characterList = [
         {
@@ -45,14 +45,14 @@ window.onload = function(){
         core.keybind(51, 'three');
         core.keybind(52, 'four');
         var gameBackgroundImg = new Sprite( 900, 1300 );
-        gameBackgroundImg.image = core.assets['mapimage/background.jpg'];
+        gameBackgroundImg.image = core.assets['gameassets/mapimage/background.jpg'];
         demon.sp = new Sprite(32,32);
-        demon.sp.image = core.assets['chara/chara.png'];
+        demon.sp.image = core.assets['gameassets/chara/chara.png'];
         demon.sp.frame = 24;
         for(let i = 0; i < characterList.length; i++){
             let baseFrame = i*6;
             characterList[i].sp = new Sprite(32,32);
-            characterList[i].sp.image = core.assets['chara/chara.png'];
+            characterList[i].sp.image = core.assets['gameassets/chara/chara.png'];
             characterList[i].sp.frame = baseFrame;
             let currentStatus = characterList[i].status;
             Object.defineProperty(characterList[i], 'status', {
@@ -89,10 +89,10 @@ window.onload = function(){
         var floorLabels = new Group();
         var corridors = new Group();
         var baseDistance = 0;
-        var sound = core.assets['heartwav/Heart_1.wav'];
+        var sound = core.assets['gameassets/heartwav/Heart_1.wav'];
         var selectFrame = new Sprite(32, 32);
-        selectFrame.image = core.assets['chara/select.png'];
-        $.getJSON("map.json" , function(mapJson) {
+        selectFrame.image = core.assets['gameassets/chara/select.png'];
+        $.getJSON("gameassets/map.json" , function(mapJson) {
             $.each(mapJson["mapData"], function(index, data){
                 var room = new Group();
                 room.characters = new Array();
@@ -111,9 +111,9 @@ window.onload = function(){
                 roomNumber.font = 'italic 16px Palatino';
                 roomNumber.color = 'white';
                 if(data.category === "normal"){
-                    sprite.image = core.assets['mapimage/normal_classroom.png'];
+                    sprite.image = core.assets['gameassets/mapimage/normal_classroom.png'];
                 }else if(data.category === "special"){
-                    sprite.image = core.assets['mapimage/special_classroom.png'];
+                    sprite.image = core.assets['gameassets/mapimage/special_classroom.png'];
                 }
                 sprite.on('touchstart', function(){
                     _movingCharacter=movingCharacter;
@@ -155,7 +155,7 @@ window.onload = function(){
 
             $.each(mapJson["corridorData"], function(index, data){
                 var sprite = new Sprite(data.corridor_width, data.corridor_height);
-                sprite.image = core.assets['mapimage/corridor.png'];
+                sprite.image = core.assets['gameassets/mapimage/corridor.png'];
                 sprite.frame = index;
                 sprite.x = data.pos_x+120;
                 sprite.y = data.pos_y+560*(data.floor-1)+90;
@@ -164,7 +164,7 @@ window.onload = function(){
 
             $.each(mapJson["exitData"], function(index, data){
                 var sprite = new Sprite(data.exit_width, data.exit_height);
-                sprite.image = core.assets['mapimage/escape_exit.png'];
+                sprite.image = core.assets['gameassets/mapimage/escape_exit.png'];
                 sprite.rotation = data.angle;
                 sprite.x = data.pos_x+120;
                 sprite.y = data.pos_y+90;
@@ -199,13 +199,9 @@ window.onload = function(){
         var createTitleScene = function(){
             sceneNumber = 1;
             var scene = new Scene();
-            scene.addChild(gameBackgroundImg);
-            var label = new Label();
-            label.x = 250;
-            label.y = 280;
-            label.text = '視　て　い　る';
-            label.font = "40px Palatino"
-            scene.addChild(label);
+            var gametop = new Sprite(900, 1300);
+            gametop.image = core.assets['gameassets/ui/gametop.jpg'];
+            scene.addChild(gametop);
             scene.on('touchstart', function(){
                 core.replaceScene(createSelectScene());
             });
@@ -222,6 +218,12 @@ window.onload = function(){
             captionLabel.y = 12;
             captionLabel.text = 'キャラ選択'
             captionLabel.font = '20px Palatino';
+            var nextButton = new Sprite(82, 33);
+            nextButton.image = core.assets['gameassets/ui/nextbutton.png'];
+            nextButton.frame = 1
+            nextButton.x = 650;
+            nextButton.y = 12;
+            scene.addChild(nextButton);
             for(let i = 0; i < characterList.length; i++){
                 let playerLabel = new Label();
                 scene.addChild(playerLabel);
@@ -236,15 +238,10 @@ window.onload = function(){
                     playerList.push(characterList[i]);
                     characterList[i].sp.className = "chara";
                     playerLabel.text = playerList.length-1+playerLabel.text;
+                    if(playerList.length >= 4) nextButton.frame = 0;
                 });
             };
-            var nextLabel = new Label();
-            scene.addChild(nextLabel);
-            nextLabel.text = '次へ';
-            nextLabel.x = 650;
-            nextLabel.y = 12;
-            nextLabel.font = '20px Palatino';
-            nextLabel.on('touchstart', function(){
+            nextButton.on('touchstart', function(){
                 if(playerList.length >= 4){
                     randomRooms = randomSelect(map.childNodes, playerList.length);
                     for(let i = 0; i < playerList.length; i++){
@@ -280,14 +277,12 @@ window.onload = function(){
                 scene.addChild(playerList[i].sp);
                 scene.addChild(playerList[i].top);
             };
-
-            var nextLabel = new Label();
-            scene.addChild(nextLabel);
-            nextLabel.text = '生徒フェーズへ'
-            nextLabel.x = 740;
-            nextLabel.y = 22;
-            nextLabel.font = '20px Palatino';
-            nextLabel.on('touchstart', function(){
+            var toStudentButton = new Sprite(145, 33);
+            toStudentButton.image = core.assets['gameassets/ui/tostudentbutton.png'];
+            toStudentButton.x = 720;
+            toStudentButton.y = 17;
+            scene.addChild(toStudentButton);
+            toStudentButton.on('touchstart', function(){
                 core.replaceScene(createStudentPhaseScene());
             });
             scene.addChild(selectFrame);
@@ -328,13 +323,13 @@ window.onload = function(){
                     if(sound._state) sound.stop();
                 });
             };
-            var nextLabel = new Label();
-            scene.addChild(nextLabel);
-            nextLabel.text = '鬼フェーズへ'
-            nextLabel.x = 740;
-            nextLabel.y = 22;
-            nextLabel.font = '20px Palatino';
-            nextLabel.on('touchstart', function(){
+            
+            var toDemonButton = new Sprite(119, 33);
+            toDemonButton.image = core.assets['gameassets/ui/todemonbutton.png'];
+            toDemonButton.x = 746;
+            toDemonButton.y = 17;
+            scene.addChild(toDemonButton);
+            toDemonButton.on('touchstart', function(){
                 if(sound._state) sound.stop();
                 if(turn === 14){
                     alert("14ターンが経過しました。ゲームを終了します。");
@@ -373,9 +368,9 @@ window.onload = function(){
 
                     distance = (Math.sqrt(Math.pow(demon.room.world_x-movingCharacter.room.world_x, 2)+Math.pow(demon.room.world_y-movingCharacter.room.world_y, 2))+300*Math.abs(demon.room.floor-movingCharacter.room.floor))*baseDistance;
                     threeTimesDistance = distance*3;
-                    if(threeTimesDistance <= 1) sound = core.assets['heartwav/Heart_3.wav'];
-                    else if(threeTimesDistance <= 2) sound = core.assets['heartwav/Heart_2.wav'];
-                    else if(threeTimesDistance <= 3) sound = core.assets['heartwav/Heart_1.wav'];
+                    if(threeTimesDistance <= 1) sound = core.assets['gameassets/heartwav/Heart_3.wav'];
+                    else if(threeTimesDistance <= 2) sound = core.assets['gameassets/heartwav/Heart_2.wav'];
+                    else if(threeTimesDistance <= 3) sound = core.assets['gameassets/heartwav/Heart_1.wav'];
                     sound.play();
                     sound.src.loop = true;
                 }
@@ -414,8 +409,8 @@ window.onload = function(){
         function createTop(chara, num){
             chara.top = new Group();
             var topSp = new Sprite(32,32);
-            if(chara == demon) topSp.image = core.assets['chara/chara.png'];
-            else topSp.image = core.assets['chara/chara.png'];
+            if(chara == demon) topSp.image = core.assets['gameassets/chara/chara.png'];
+            else topSp.image = core.assets['gameassets/chara/chara.png'];
             topSp.frame = chara.sp.frame;
             topSp.x = 270 + num * 80;
             if(chara !== demon) topSp.x += 30;
