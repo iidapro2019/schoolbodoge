@@ -4,7 +4,7 @@ window.onload = function(){
     var core = new Core(900, 1300);
     var turn = 0;
     var sceneNumber = 0;
-    core.preload(['chara/chara.png', 'select.png', 'image/background.jpg', 'image/normal_classroom.png', 'image/special_classroom.png', 'image/corridor.png', 'image/escape_exit.png', 'Heart_1.wav', 'Heart_2.wav', 'Heart_3.wav']);
+    core.preload(['chara/chara.png', 'chara/select.png', 'mapimage/background.jpg', 'mapimage/normal_classroom.png', 'mapimage/special_classroom.png', 'mapimage/corridor.png', 'mapimage/escape_exit.png', 'heartwav/Heart_1.wav', 'heartwav/Heart_2.wav', 'heartwav/Heart_3.wav']);
  
     var characterList = [
         {
@@ -45,7 +45,7 @@ window.onload = function(){
         core.keybind(51, 'three');
         core.keybind(52, 'four');
         var gameBackgroundImg = new Sprite( 900, 1300 );
-        gameBackgroundImg.image = core.assets['image/background.jpg'];
+        gameBackgroundImg.image = core.assets['mapimage/background.jpg'];
         demon.sp = new Sprite(32,32);
         demon.sp.image = core.assets['chara/chara.png'];
         demon.sp.frame = 24;
@@ -89,9 +89,9 @@ window.onload = function(){
         var floorLabels = new Group();
         var corridors = new Group();
         var baseDistance = 0;
-        var sound = core.assets['Heart_1.wav'];
+        var sound = core.assets['heartwav/Heart_1.wav'];
         var selectFrame = new Sprite(32, 32);
-        selectFrame.image = core.assets['select.png'];
+        selectFrame.image = core.assets['chara/select.png'];
         $.getJSON("map.json" , function(mapJson) {
             $.each(mapJson["mapData"], function(index, data){
                 var room = new Group();
@@ -111,9 +111,9 @@ window.onload = function(){
                 roomNumber.font = 'italic 16px Palatino';
                 roomNumber.color = 'white';
                 if(data.category === "normal"){
-                    sprite.image = core.assets['image/normal_classroom.png'];
+                    sprite.image = core.assets['mapimage/normal_classroom.png'];
                 }else if(data.category === "special"){
-                    sprite.image = core.assets['image/special_classroom.png'];
+                    sprite.image = core.assets['mapimage/special_classroom.png'];
                 }
                 sprite.on('touchstart', function(){
                     _movingCharacter=movingCharacter;
@@ -155,7 +155,7 @@ window.onload = function(){
 
             $.each(mapJson["corridorData"], function(index, data){
                 var sprite = new Sprite(data.corridor_width, data.corridor_height);
-                sprite.image = core.assets['image/corridor.png'];
+                sprite.image = core.assets['mapimage/corridor.png'];
                 sprite.frame = index;
                 sprite.x = data.pos_x+120;
                 sprite.y = data.pos_y+560*(data.floor-1)+90;
@@ -164,7 +164,7 @@ window.onload = function(){
 
             $.each(mapJson["exitData"], function(index, data){
                 var sprite = new Sprite(data.exit_width, data.exit_height);
-                sprite.image = core.assets['image/escape_exit.png'];
+                sprite.image = core.assets['mapimage/escape_exit.png'];
                 sprite.rotation = data.angle;
                 sprite.x = data.pos_x+120;
                 sprite.y = data.pos_y+90;
@@ -373,9 +373,9 @@ window.onload = function(){
 
                     distance = (Math.sqrt(Math.pow(demon.room.world_x-movingCharacter.room.world_x, 2)+Math.pow(demon.room.world_y-movingCharacter.room.world_y, 2))+300*Math.abs(demon.room.floor-movingCharacter.room.floor))*baseDistance;
                     threeTimesDistance = distance*3;
-                    if(threeTimesDistance <= 1) sound = core.assets['Heart_3.wav'];
-                    else if(threeTimesDistance <= 2) sound = core.assets['Heart_2.wav'];
-                    else if(threeTimesDistance <= 3) sound = core.assets['Heart_1.wav'];
+                    if(threeTimesDistance <= 1) sound = core.assets['heartwav/Heart_3.wav'];
+                    else if(threeTimesDistance <= 2) sound = core.assets['heartwav/Heart_2.wav'];
+                    else if(threeTimesDistance <= 3) sound = core.assets['heartwav/Heart_1.wav'];
                     sound.play();
                     sound.src.loop = true;
                 }
