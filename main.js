@@ -235,7 +235,7 @@ window.onload = function(){
                 $(playerLabel).one('touchstart', function(){
                     playerList.push(characterList[i]);
                     characterList[i].sp.className = "chara";
-                    playerLabel.text = playerList.length+playerLabel.text;
+                    playerLabel.text = playerList.length-1+playerLabel.text;
                 });
             };
             var nextLabel = new Label();
