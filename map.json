@@ -16,7 +16,6 @@
             "exit_height": 92,
             "angle": 180
         }
-        
     ],
     "corridorData": [
         {
@@ -25,7 +24,6 @@
             "corridor_width": 29,
             "corridor_height": 528,
             "floor": 1
-
         },
         {
             "pos_x": 491,
@@ -33,7 +31,6 @@
             "corridor_width": 29,
             "corridor_height": 528,
             "floor": 1
-
         },
         {
             "pos_x": 174,
@@ -41,7 +38,6 @@
             "corridor_width": 29,
             "corridor_height": 528,
             "floor": 2
-
         },
         {
             "pos_x": 491,
@@ -49,7 +45,6 @@
             "corridor_width": 29,
             "corridor_height": 528,
             "floor": 2
-
         }
     ],
     "mapData": [
@@ -309,17 +304,6 @@
             "room_height": 120,
             "category": "normal"
         },
-
-
-
-
-
-
-
-
-
-
-
         {
             "pos_x": 0,
             "pos_y": 0,

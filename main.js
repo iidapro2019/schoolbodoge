@@ -4,7 +4,7 @@ window.onload = function(){
     var core = new Core(900, 1300);
     var turn = 0;
     var sceneNumber = 0;
-    core.preload(['chara/chara.png', 'select.png', 'image/background.jpg', 'image/normal_classroom.png', 'image/special_classroom.png', 'image/escape_exit.png', 'Heart_1.wav', 'Heart_2.wav', 'Heart_3.wav']);
+    core.preload(['chara/chara.png', 'select.png', 'image/background.jpg', 'image/normal_classroom.png', 'image/special_classroom.png', 'image/corridor.png', 'image/escape_exit.png', 'Heart_1.wav', 'Heart_2.wav', 'Heart_3.wav']);
  
     var characterList = [
         {
@@ -87,7 +87,7 @@ window.onload = function(){
         }
         var map = new Group();
         var floorLabels = new Group();
-        var exits = new Group();
+        var corridors = new Group();
         var baseDistance = 0;
         var sound = core.assets['Heart_1.wav'];
         var selectFrame = new Sprite(32, 32);
@@ -152,6 +152,15 @@ window.onload = function(){
                 floorLabel.color = 'white';
                 floorLabels.addChild(floorLabel);
             }
+            
+            $.each(mapJson["corridorData"], function(index, data){
+                var sprite = new Sprite(data.corridor_width, data.corridor_height);
+                sprite.image = core.assets['image/corridor.png'];
+                sprite.frame = index;
+                sprite.x = data.pos_x+120;
+                sprite.y = data.pos_y+560*(data.floor-1)+90;
+                corridors.addChild(sprite);
+            });
 
             $.each(mapJson["exitData"], function(index, data){
                 var sprite = new Sprite(data.exit_width, data.exit_height);
@@ -159,7 +168,7 @@ window.onload = function(){
                 sprite.rotation = data.angle;
                 sprite.x = data.pos_x+120;
                 sprite.y = data.pos_y+90;
-                exits.addChild(sprite);
+                corridors.addChild(sprite);
 
                 sprite.on('touchstart', function(){
                     _movingCharacter=movingCharacter;
@@ -171,23 +180,16 @@ window.onload = function(){
                         if(confirm(`${_movingCharacter.name}が脱出します。`)){
                             _movingCharacter.room.characters = _movingCharacter.room.characters.filter(n => n !== _movingCharacter);
                             _movingCharacter.status = 'survival';
-                            if(playerList.some(chara => chara.status === 'escape')) changeMovingCharacter(playerList.find(chara => chara.status === 'escape'));
-                            else core.replaceScene(createResultScene());
+                            if(playerList.some(chara => chara.status === 'escape')){
+                                changeMovingCharacter(playerList.find(chara => chara.status === 'escape'));
+                            }else{
+                                alert("生徒が全員いなくなりました。ゲームを終了します。");
+                                core.replaceScene(createResultScene());
+                            }
                         }
                     }
                 });
             });
-
-            // $.each(mapJson["corridorData"], function(index, data){
-            //     var sprite = new Sprite(data.corridor_width, data.corridor_height);
-            //     sprite.image = core.assets['image/escape_exit.png'];
-            //     sprite.rotation = data.angle;
-            //     sprite.x = data.pos_x+120;
-            //     sprite.y = data.pos_y+90;
-            //     exits.addChild(sprite);
-
-
-            // });
 
 
             baseDistance = 1/(Math.sqrt(Math.pow(map.lastChild.world_x-map.firstChild.world_x, 2)+Math.pow(map.lastChild.world_y-map.firstChild.world_y, 2))+300*(mapJson.floorNumber-1));
@@ -292,7 +294,7 @@ window.onload = function(){
             changeMovingCharacter(demon);
             scene.addChild(map);
             scene.addChild(floorLabels);
-            scene.addChild(exits);
+            scene.addChild(corridors);
             
             return scene;
         };
@@ -343,7 +345,7 @@ window.onload = function(){
             });
             scene.addChild(map);
             scene.addChild(floorLabels);
-            scene.addChild(exits);
+            scene.addChild(corridors);
 
             scene.addEventListener('enterframe', function(e) {
                 if (core.input.one && playerList[1].status === "escape"){
