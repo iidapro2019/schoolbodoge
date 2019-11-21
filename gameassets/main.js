@@ -108,7 +108,7 @@ window.onload = function(){
                 roomNumber.x = data.pos_x+125;
                 roomNumber.y = data.pos_y+560*(data.floor-1)+95;
                 room.addChild(roomNumber);
-                roomNumber.font = 'italic 16px Palatino';
+                roomNumber.font = 'italic 16px gameFont';
                 roomNumber.color = 'white';
                 if(data.category === "normal"){
                     sprite.image = core.assets['gameassets/mapimage/normal_classroom.png'];
@@ -148,7 +148,7 @@ window.onload = function(){
                 floorLabel.text = `${i+1}F`;
                 floorLabel.x = 40;
                 floorLabel.y = 105+560*(i);
-                floorLabel.font = 'italic 35px Palatino';
+                floorLabel.font = 'italic 35px gameFont';
                 floorLabel.color = 'white';
                 floorLabels.addChild(floorLabel);
             }
@@ -217,7 +217,7 @@ window.onload = function(){
             captionLabel.x = 12;
             captionLabel.y = 12;
             captionLabel.text = 'キャラ選択'
-            captionLabel.font = '20px Palatino';
+            captionLabel.font = '20px gameFont';
             var nextButton = new Sprite(82, 33);
             nextButton.image = core.assets['gameassets/ui/nextbutton.png'];
             nextButton.frame = 1
@@ -230,7 +230,7 @@ window.onload = function(){
                 playerLabel.text = characterList[i].name;
                 playerLabel.x = 280*(i%2)+110;
                 playerLabel.y = 80*(Math.floor(i/2)+1);
-                playerLabel.font = '20px Palatino';
+                playerLabel.font = '20px gameFont';
                 characterList[i].sp.x = playerLabel.x-30;
                 characterList[i].sp.y = playerLabel.y-5;
                 scene.addChild(characterList[i].sp);
@@ -269,12 +269,12 @@ window.onload = function(){
             captionLabel.x = 12;
             captionLabel.y = 12;
             captionLabel.text = '鬼フェーズ：'+turn+'ターン目';
-            captionLabel.font = '20px Palatino';
+            captionLabel.font = '20px gameFont';
             movingCharacterLabel = new Label();
             scene.addChild(movingCharacterLabel);
             movingCharacterLabel.x = 17;
             movingCharacterLabel.y = 42;
-            movingCharacterLabel.font = '16px Palatino';
+            movingCharacterLabel.font = '16px gameFont';
             for(let i = 0; i < playerList.length; i++){
                 scene.addChild(playerList[i].sp);
                 scene.addChild(playerList[i].top);
@@ -307,12 +307,12 @@ window.onload = function(){
             captionLabel.x = 12;
             captionLabel.y = 12;
             captionLabel.text = '生徒フェーズ：'+turn+'ターン目';
-            captionLabel.font = '20px Palatino';
+            captionLabel.font = '20px gameFont';
             movingCharacterLabel = new Label();
             scene.addChild(movingCharacterLabel);
             movingCharacterLabel.x = 17;
             movingCharacterLabel.y = 42;
-            movingCharacterLabel.font = '16px Palatino';
+            movingCharacterLabel.font = '16px gameFont';
             scene.addChild(selectFrame);
             changeMovingCharacter(playerList.find(chara => chara.status === 'escape'));
             for(let i = 0; i < playerList.length; i++){
@@ -392,7 +392,7 @@ window.onload = function(){
             captionLabel.y = 130;
             scene.addChild(captionLabel);
             captionLabel.text = 'リザルト';
-            captionLabel.font = '60px Palatino';
+            captionLabel.font = '60px gameFont';
             captionLabel.textAlign = 'center';
             var turnResultLabel = new Label();
             turnResultLabel.x = 110;
@@ -400,13 +400,13 @@ window.onload = function(){
             scene.addChild(turnResultLabel);
             turnResultLabel.width = 400;
             turnResultLabel.text = `経過ターン：${turn}ターン`;
-            turnResultLabel.font = '35px Palatino';
+            turnResultLabel.font = '35px gameFont';
             var remainingResultLabel = new Label();
             remainingResultLabel.x = 110;
             remainingResultLabel.y = 280;
             scene.addChild(remainingResultLabel);
             remainingResultLabel.text = `生徒残り数：${playerList.filter(chara => chara.status === 'escape').length}人`;
-            remainingResultLabel.font = '35px Palatino';
+            remainingResultLabel.font = '35px gameFont';
             return scene;
         };
 
@@ -422,6 +422,7 @@ window.onload = function(){
             chara.top.addChild(topSp);
             var topLabel = new Label();
             topLabel.text = chara.name;
+            topLabel.font = '14px gameFont';
             topLabel.textAlign = 'center';
             topLabel.x = 135 + num * 80;
             if(chara !== demon) topLabel.x += 30;

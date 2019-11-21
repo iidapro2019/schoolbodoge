@@ -39,11 +39,19 @@ li.game a:hover {
     margin: 10px 40px 10px 40px;
     padding: 10px;
 }
-
+@font-face{
+	font-family: 'gameFont';
+	src: url('PixelMplus10-Regular.ttf')
+}
 .game-page{
 	background-image: url('siteimage/home-background.jpg');
+	font-family: 'gameFont';
+	
 }
 
 img{
 	width: 100%;
 }
+
+
+
