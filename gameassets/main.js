@@ -29,7 +29,7 @@ window.onload = function(){
     }
     var playerList = [demon];
     var movingCharacter = demon;
-    core.fps = 15;
+    core.fps = 10;
     var left = ( window.innerWidth - ( core.width * core.scale ) ) / 2;
     $('#enchant-stage').css({
         "position":"absolute",
@@ -260,6 +260,8 @@ window.onload = function(){
         var createDemonPhaseScene = function(){
             sceneNumber = 3;
             turn++;
+            demon.sp.frame = [24,25,26,27,27,27,27,27,27,27,27,27,27,28,26,25,24,24,24,24];
+            demon.top.firstChild.frame = [24,25,26,27,27,27,27,27,27,27,27,27,27,28,26,25,24,24,24,24];
             var scene = new Scene();
             scene.addChild(gameBackgroundImg);
             var captionLabel = new Label();
@@ -283,6 +285,8 @@ window.onload = function(){
             toStudentButton.y = 17;
             scene.addChild(toStudentButton);
             toStudentButton.on('touchstart', function(){
+                demon.sp.frame = 24;
+                demon.top.firstChild.frame = 24;
                 core.replaceScene(createStudentPhaseScene());
             });
             scene.addChild(selectFrame);
