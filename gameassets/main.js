@@ -4,7 +4,7 @@ window.onload = function(){
     var core = new Core(900, 1300);
     var turn = 0;
     var sceneNumber = 0;
-    core.preload(['gameassets/chara/chara.png', 'gameassets/chara/select.png', 'gameassets/mapimage/background.jpg', 'gameassets/mapimage/normal_classroom.png', 'gameassets/mapimage/special_classroom.png', 'gameassets/mapimage/corridor.png', 'gameassets/mapimage/escape_exit.png', 'gameassets/ui/gametop.jpg', 'gameassets/ui/nextbutton.png', 'gameassets/ui/todemonbutton.png', 'gameassets/ui/tostudentbutton.png', 'gameassets/heartwav/Heart_1.wav', 'gameassets/heartwav/Heart_2.wav', 'gameassets/heartwav/Heart_3.wav']);
+    core.preload(['gameassets/chara/chara.png', 'gameassets/chara/select.png', 'gameassets/mapimage/background.jpg', 'gameassets/mapimage/background2.jpg','gameassets/mapimage/normal_classroom.png', 'gameassets/mapimage/special_classroom.png', 'gameassets/mapimage/corridor.png', 'gameassets/mapimage/escape_exit.png', 'gameassets/ui/gametop.jpg', 'gameassets/ui/nextbutton.png', 'gameassets/ui/todemonbutton.png', 'gameassets/ui/tostudentbutton.png', 'gameassets/heartwav/Heart_1.wav', 'gameassets/heartwav/Heart_2.wav', 'gameassets/heartwav/Heart_3.wav']);
  
     var characterList = [
         {
@@ -47,6 +47,8 @@ window.onload = function(){
         core.keybind(52, 'four');
         var gameBackgroundImg = new Sprite( 900, 1300 );
         gameBackgroundImg.image = core.assets['gameassets/mapimage/background.jpg'];
+        var gameBackgroundImg2 = new Sprite( 900, 1300 );
+        gameBackgroundImg2.image = core.assets['gameassets/mapimage/background2.jpg'];
         demon.sp = new Sprite(32,32);
         demon.sp.image = core.assets['gameassets/chara/chara.png'];
         demon.sp.frame = 24;
@@ -215,10 +217,16 @@ window.onload = function(){
             scene.addChild(gameBackgroundImg);
             var captionLabel = new Label();
             scene.addChild(captionLabel);
-            captionLabel.x = 12;
-            captionLabel.y = 12;
+            captionLabel.x = 20;
+            captionLabel.y = 15;
             captionLabel.text = 'キャラ選択'
-            captionLabel.font = '20px gameFont';
+            captionLabel.font = '30px gameFont';
+            detailLabel = new Label();
+            scene.addChild(detailLabel);
+            detailLabel.x = 23;
+            detailLabel.y = 50;
+            detailLabel.font = '16px gameFont';
+            detailLabel.text = "プレイする順に選択して下さい。"
             var nextButton = new Sprite(82, 33);
             nextButton.image = core.assets['gameassets/ui/nextbutton.png'];
             nextButton.frame = 1
@@ -229,9 +237,9 @@ window.onload = function(){
                 let playerLabel = new Label();
                 scene.addChild(playerLabel);
                 playerLabel.text = characterList[i].name;
-                playerLabel.x = 280*(i%2)+110;
-                playerLabel.y = 80*(Math.floor(i/2)+1);
-                playerLabel.font = '20px gameFont';
+                playerLabel.x = 280*(i%2)+150;
+                playerLabel.y = 100*(Math.floor(i/2)+1)+30;
+                playerLabel.font = '25px gameFont';
                 characterList[i].sp.x = playerLabel.x-30;
                 characterList[i].sp.y = playerLabel.y-5;
                 scene.addChild(characterList[i].sp);
@@ -387,7 +395,7 @@ window.onload = function(){
         var createResultScene = function(){
             sceneNumber = 5;
             var scene = new Scene();
-            scene.addChild(gameBackgroundImg);
+            scene.addChild(gameBackgroundImg2);
             var captionLabel = new Label();
             captionLabel.x = 300;
             captionLabel.y = 130;
