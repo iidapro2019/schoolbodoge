@@ -9,29 +9,29 @@ ul.nav {
 	overflow: hidden;
 	background-color: #1b2538;
 }
-li {
+ul.nav li {
 	float: left;
 	border-right: 1px solid #bbbbbb;
 }
-li:last-child {
+ul.nav li:last-child {
 	border-right: none;
 }
-li a {
+ul.nav li a {
 	display: block;
 	color: white;
 	text-align: center;
 	padding: 14px 16px;
 	text-decoration: none;
 }
-li a:hover {
+ul.nav li a:hover {
 	background-color: #aaaaaa;
 }
-li.game{
+ul.nav li.game{
     background-color: #aa0000;
     float: right;
 }
 
-li.game a:hover {
+ul.nav li.game a:hover {
     background-color: #dd0000;
 }
 
@@ -39,19 +39,48 @@ li.game a:hover {
     margin: 10px 40px 10px 40px;
     padding: 10px;
 }
+
+
+img{
+	width: 100%;
+	
+}
+
+/* 以下ゲーム用 */
+
+:root {
+	--game-width: 50vw;
+}
+
 @font-face{
 	font-family: 'gameFont';
 	src: url('PixelMplus10-Regular.ttf')
 }
+
 .game-page{
 	background-image: url('siteimage/home-background.jpg');
 	font-family: 'gameFont';
 	
 }
 
-img{
-	width: 100%;
+#game-rule{
+	color: #fff;
+	text-shadow: 0 2px 4px #000;
+	padding-left: 5px;
+	margin-left: 10px;
+	align-self: flex-start;
+}
+#game-rule h2{
+	padding-left: 10px;
+
+}
+#game-rule ul{
+	font-size: 13px;
+	line-height: 17px;
 }
 
-
+.container {
+	display: flex;
+	flex-wrap: wrap;
+}
 

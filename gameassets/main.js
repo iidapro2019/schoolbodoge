@@ -30,14 +30,15 @@ window.onload = function(){
     var playerList = [demon];
     var movingCharacter = demon;
     core.fps = 10;
-    var left = ( window.innerWidth - ( core.width * core.scale ) ) / 2;
-    $('#enchant-stage').css({
-        "position":"absolute",
-        "left":left+"px",
-        "top":"80px",
-        "margin-bottom":"20px",
+    if((window.innerWidth - ( core.width * core.scale ))*5/7 > $("#game-rule").outerWidth(true)){
+        var left = ( window.innerWidth - ( core.width * core.scale ) )*2 / 7;
+    }else{
+        var left = ( window.innerWidth - ( core.width * core.scale ) ) / 2;
+    }
+    $('.container').css({
+        "margin":"10px 0px 0px "+left+"px",
     });
-    core._pageY = 80;
+    core._pageY = $("#enchant-stage").offset().top;
     core._pageX = left;
     core.onload = function(){
         core.keybind(49, 'one');
