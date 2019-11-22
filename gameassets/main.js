@@ -1,12 +1,14 @@
+"use strict";
+
 enchant();
 
 window.onload = function(){
-    var core = new Core(900, 1300);
-    var turn = 0;
-    var sceneNumber = 0;
+    let core = new Core(900, 1300);
+    let turn = 0;
+    let sceneNumber = 0;
     core.preload(['gameassets/chara/chara.png', 'gameassets/chara/select.png', 'gameassets/mapimage/background.jpg', 'gameassets/mapimage/background2.jpg','gameassets/mapimage/normal_classroom.png', 'gameassets/mapimage/special_classroom.png', 'gameassets/mapimage/corridor.png', 'gameassets/mapimage/escape_exit.png', 'gameassets/ui/gametop.jpg', 'gameassets/ui/nextbutton.png', 'gameassets/ui/todemonbutton.png', 'gameassets/ui/tostudentbutton.png', 'gameassets/heartwav/Heart_1.wav', 'gameassets/heartwav/Heart_2.wav', 'gameassets/heartwav/Heart_3.wav']);
  
-    var characterList = [
+    let characterList = [
         {
             name: '春原 歌呼',
             status: 'escape'
@@ -24,16 +26,17 @@ window.onload = function(){
             status: 'escape'
         }
     ];
-    var demon  = {
+    let demon  = {
         name: '鬼'
     }
-    var playerList = [demon];
-    var movingCharacter = demon;
+    let playerList = [demon];
+    let movingCharacter = demon;
     core.fps = 10;
+    let left = 0;
     if((window.innerWidth - ( core.width * core.scale ))*5/7 > $("#game-rule").outerWidth(true)){
-        var left = ( window.innerWidth - ( core.width * core.scale ) )*2 / 7;
+        left = ( window.innerWidth - ( core.width * core.scale ) )*2 / 7;
     }else{
-        var left = ( window.innerWidth - ( core.width * core.scale ) ) / 2;
+        left = ( window.innerWidth - ( core.width * core.scale ) ) / 2;
     }
     $('.container').css({
         "margin":"10px 0px 0px "+left+"px",
@@ -45,9 +48,9 @@ window.onload = function(){
         core.keybind(50, 'two');
         core.keybind(51, 'three');
         core.keybind(52, 'four');
-        var gameBackgroundImg = new Sprite( 900, 1300 );
+        let gameBackgroundImg = new Sprite( 900, 1300 );
         gameBackgroundImg.image = core.assets['gameassets/mapimage/background.jpg'];
-        var gameBackgroundImg2 = new Sprite( 900, 1300 );
+        let gameBackgroundImg2 = new Sprite( 900, 1300 );
         gameBackgroundImg2.image = core.assets['gameassets/mapimage/background2.jpg'];
         demon.sp = new Sprite(32,32);
         demon.sp.image = core.assets['gameassets/chara/chara.png'];
@@ -88,28 +91,28 @@ window.onload = function(){
                 configurable: true
             });
         }
-        var map = new Group();
-        var floorLabels = new Group();
-        var corridors = new Group();
-        var baseDistance = 0;
-        var sound = core.assets['gameassets/heartwav/Heart_1.wav'];
-        var selectFrame = new Sprite(32, 32);
+        let map = new Group();
+        let floorLabels = new Group();
+        let corridors = new Group();
+        let baseDistance = 0;
+        let sound = core.assets['gameassets/heartwav/Heart_1.wav'];
+        let selectFrame = new Sprite(32, 32);
         selectFrame.image = core.assets['gameassets/chara/select.png'];
         $.getJSON("gameassets/map.json" , function(mapJson) {
             $.each(mapJson["mapData"], function(index, data){
-                var room = new Group();
+                let room = new Group();
                 room.characters = new Array();
                 room.floor = data.floor;
                 room.world_x = data.pos_x;
                 room.world_y = data.pos_y;
-                var roomNumber = new Label();
+                let roomNumber = new Label();
                 roomNumber.text = index + 1;
                 roomNumber.x = data.pos_x+125;
                 roomNumber.y = data.pos_y+560*(data.floor-1)+95;
                 room.addChild(roomNumber);
                 roomNumber.font = 'italic 16px gameFont';
                 roomNumber.color = 'white';
-                var sprite = new Sprite(data.room_width, data.room_height);
+                let sprite = new Sprite(data.room_width, data.room_height);
                 room.addChild(sprite);
                 sprite.x = data.pos_x+120;
                 sprite.y = data.pos_y+560*(data.floor-1)+90;
@@ -119,7 +122,7 @@ window.onload = function(){
                     sprite.image = core.assets['gameassets/mapimage/special_classroom.png'];
                 }
                 sprite.on('touchstart', function(){
-                    _movingCharacter=movingCharacter;
+                    let _movingCharacter=movingCharacter;
                     if(_movingCharacter.room == room) return;
 
                     if (sound.src.loop) sound.stop();
@@ -147,7 +150,7 @@ window.onload = function(){
             });
 
             for(let i = 0; i < mapJson["floorNumber"]; i++){
-                var floorLabel = new Label();
+                let floorLabel = new Label();
                 floorLabel.text = `${i+1}F`;
                 floorLabel.x = 40;
                 floorLabel.y = 105+560*(i);
@@ -157,7 +160,7 @@ window.onload = function(){
             }
 
             $.each(mapJson["corridorData"], function(index, data){
-                var sprite = new Sprite(data.corridor_width, data.corridor_height);
+                let sprite = new Sprite(data.corridor_width, data.corridor_height);
                 sprite.image = core.assets['gameassets/mapimage/corridor.png'];
                 sprite.frame = index;
                 sprite.x = data.pos_x+120;
@@ -166,7 +169,7 @@ window.onload = function(){
             });
 
             $.each(mapJson["exitData"], function(index, data){
-                var sprite = new Sprite(data.exit_width, data.exit_height);
+                let sprite = new Sprite(data.exit_width, data.exit_height);
                 sprite.image = core.assets['gameassets/mapimage/escape_exit.png'];
                 sprite.rotation = data.angle;
                 sprite.x = data.pos_x+120;
@@ -174,7 +177,7 @@ window.onload = function(){
                 corridors.addChild(sprite);
 
                 sprite.on('touchstart', function(){
-                    _movingCharacter=movingCharacter;
+                    let _movingCharacter=movingCharacter;
 
                     if (sound.src.loop) sound.stop();
                     if(sceneNumber == 3){
@@ -199,10 +202,10 @@ window.onload = function(){
         });
 
 
-        var createTitleScene = function(){
+        let createTitleScene = function(){
             sceneNumber = 1;
-            var scene = new Scene();
-            var gametop = new Sprite(900, 1300);
+            let scene = new Scene();
+            let gametop = new Sprite(900, 1300);
             gametop.image = core.assets['gameassets/ui/gametop.jpg'];
             scene.addChild(gametop);
             scene.on('touchstart', function(){
@@ -211,23 +214,23 @@ window.onload = function(){
             return scene;
         };
 
-        var createSelectScene = function(){
+        let createSelectScene = function(){
             sceneNumber = 2;
-            var scene = new Scene();
+            let scene = new Scene();
             scene.addChild(gameBackgroundImg);
-            var captionLabel = new Label();
+            let captionLabel = new Label();
             scene.addChild(captionLabel);
             captionLabel.x = 20;
             captionLabel.y = 15;
             captionLabel.text = 'キャラ選択'
             captionLabel.font = '30px gameFont';
-            detailLabel = new Label();
+            let detailLabel = new Label();
             scene.addChild(detailLabel);
             detailLabel.x = 23;
             detailLabel.y = 50;
             detailLabel.font = '16px gameFont';
             detailLabel.text = "プレイする順に選択して下さい。"
-            var nextButton = new Sprite(82, 33);
+            let nextButton = new Sprite(82, 33);
             nextButton.image = core.assets['gameassets/ui/nextbutton.png'];
             nextButton.frame = 1
             nextButton.x = 650;
@@ -252,7 +255,7 @@ window.onload = function(){
             };
             nextButton.on('touchstart', function(){
                 if(playerList.length >= 4){
-                    randomRooms = randomSelect(map.childNodes, playerList.length);
+                    let randomRooms = randomSelect(map.childNodes, playerList.length);
                     for(let i = 0; i < playerList.length; i++){
                         playerList[i].room = randomRooms[i];
                         randomRooms[i].characters.push(playerList[i]);
@@ -266,20 +269,21 @@ window.onload = function(){
             return scene;
         };
 
-        var createDemonPhaseScene = function(){
+        let movingCharacterLabel = new Label();
+
+        let createDemonPhaseScene = function(){
             sceneNumber = 3;
             turn++;
             demon.sp.frame = [24,25,26,27,27,27,27,27,27,27,27,27,27,28,26,25,24,24,24,24];
             demon.top.firstChild.frame = [24,25,26,27,27,27,27,27,27,27,27,27,27,28,26,25,24,24,24,24];
-            var scene = new Scene();
+            let scene = new Scene();
             scene.addChild(gameBackgroundImg);
-            var captionLabel = new Label();
+            let captionLabel = new Label();
             scene.addChild(captionLabel);
             captionLabel.x = 12;
             captionLabel.y = 12;
             captionLabel.text = '鬼フェーズ：'+turn+'ターン目';
             captionLabel.font = '20px gameFont';
-            movingCharacterLabel = new Label();
             scene.addChild(movingCharacterLabel);
             movingCharacterLabel.x = 17;
             movingCharacterLabel.y = 42;
@@ -288,7 +292,7 @@ window.onload = function(){
                 scene.addChild(playerList[i].sp);
                 scene.addChild(playerList[i].top);
             };
-            var toStudentButton = new Sprite(145, 33);
+            let toStudentButton = new Sprite(145, 33);
             toStudentButton.image = core.assets['gameassets/ui/tostudentbutton.png'];
             toStudentButton.x = 720;
             toStudentButton.y = 17;
@@ -307,17 +311,16 @@ window.onload = function(){
             return scene;
         };
 
-        var createStudentPhaseScene = function(){
+        let createStudentPhaseScene = function(){
             sceneNumber = 4;
-            var scene = new Scene();
+            let scene = new Scene();
             scene.addChild(gameBackgroundImg);
-            var captionLabel = new Label();
+            let captionLabel = new Label();
             scene.addChild(captionLabel);
             captionLabel.x = 12;
             captionLabel.y = 12;
             captionLabel.text = '生徒フェーズ：'+turn+'ターン目';
             captionLabel.font = '20px gameFont';
-            movingCharacterLabel = new Label();
             scene.addChild(movingCharacterLabel);
             movingCharacterLabel.x = 17;
             movingCharacterLabel.y = 42;
@@ -337,7 +340,7 @@ window.onload = function(){
                 });
             };
             
-            var toDemonButton = new Sprite(119, 33);
+            let toDemonButton = new Sprite(119, 33);
             toDemonButton.image = core.assets['gameassets/ui/todemonbutton.png'];
             toDemonButton.x = 746;
             toDemonButton.y = 17;
@@ -392,25 +395,25 @@ window.onload = function(){
             return scene;
         };
 
-        var createResultScene = function(){
+        let createResultScene = function(){
             sceneNumber = 5;
-            var scene = new Scene();
+            let scene = new Scene();
             scene.addChild(gameBackgroundImg2);
-            var captionLabel = new Label();
+            let captionLabel = new Label();
             captionLabel.x = 300;
             captionLabel.y = 130;
             scene.addChild(captionLabel);
             captionLabel.text = 'リザルト';
             captionLabel.font = '60px gameFont';
             captionLabel.textAlign = 'center';
-            var turnResultLabel = new Label();
+            let turnResultLabel = new Label();
             turnResultLabel.x = 110;
             turnResultLabel.y = 220;
             scene.addChild(turnResultLabel);
             turnResultLabel.width = 400;
             turnResultLabel.text = `経過ターン：${turn}ターン`;
             turnResultLabel.font = '35px gameFont';
-            var remainingResultLabel = new Label();
+            let remainingResultLabel = new Label();
             remainingResultLabel.x = 110;
             remainingResultLabel.y = 280;
             scene.addChild(remainingResultLabel);
@@ -421,7 +424,7 @@ window.onload = function(){
 
         function createTop(chara, num){
             chara.top = new Group();
-            var topSp = new Sprite(32,32);
+            let topSp = new Sprite(32,32);
             if(chara == demon) topSp.image = core.assets['gameassets/chara/chara.png'];
             else topSp.image = core.assets['gameassets/chara/chara.png'];
             topSp.frame = chara.sp.frame;
@@ -429,7 +432,7 @@ window.onload = function(){
             if(chara !== demon) topSp.x += 30;
             topSp.y = 9;
             chara.top.addChild(topSp);
-            var topLabel = new Label();
+            let topLabel = new Label();
             topLabel.text = chara.name;
             topLabel.font = '14px gameFont';
             topLabel.textAlign = 'center';
