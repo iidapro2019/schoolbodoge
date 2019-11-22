@@ -100,10 +100,6 @@ window.onload = function(){
                 room.floor = data.floor;
                 room.world_x = data.pos_x;
                 room.world_y = data.pos_y;
-                var sprite = new Sprite(data.room_width, data.room_height);
-                room.addChild(sprite);
-                sprite.x = data.pos_x+120;
-                sprite.y = data.pos_y+560*(data.floor-1)+90;
                 var roomNumber = new Label();
                 roomNumber.text = index + 1;
                 roomNumber.x = data.pos_x+125;
@@ -111,6 +107,10 @@ window.onload = function(){
                 room.addChild(roomNumber);
                 roomNumber.font = 'italic 16px gameFont';
                 roomNumber.color = 'white';
+                var sprite = new Sprite(data.room_width, data.room_height);
+                room.addChild(sprite);
+                sprite.x = data.pos_x+120;
+                sprite.y = data.pos_y+560*(data.floor-1)+90;
                 if(data.category === "normal"){
                     sprite.image = core.assets['gameassets/mapimage/normal_classroom.png'];
                 }else if(data.category === "special"){
