@@ -7,7 +7,7 @@ window.onload = function(){
     let turn = 0;
     let sceneNumber = 0;
     core.preload(['gameassets/chara/chara.png', 'gameassets/chara/select.png', 'gameassets/mapimage/background.jpg', 'gameassets/mapimage/background2.jpg','gameassets/mapimage/normal_classroom.png', 'gameassets/mapimage/special_classroom.png', 'gameassets/mapimage/corridor.png', 'gameassets/mapimage/escape_exit.png', 'gameassets/ui/gametop.jpg', 'gameassets/ui/nextbutton.png', 'gameassets/ui/todemonbutton.png', 'gameassets/ui/tostudentbutton.png', 'gameassets/heartwav/Heart_1.wav', 'gameassets/heartwav/Heart_2.wav', 'gameassets/heartwav/Heart_3.wav']);
- 
+    
     let characterList = [
         {
             name: '春原 歌呼',
