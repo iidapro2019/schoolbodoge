@@ -267,7 +267,7 @@ window.onload = function(){
                     characterList[i].sp.className = "chara";
                     playNumberLabel.text = playerList.length-1;
                     scene.addChild(playNumberLabel);
-                    scene.addChild(selectPlayerSprite);
+                    // scene.addChild(selectPlayerSprite);
                     if(playerList.length >= 4) nextButton.frame = 0;
                 });
             };
