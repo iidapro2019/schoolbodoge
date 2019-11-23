@@ -70,6 +70,7 @@ window.onload = function(){
                         characterList[i].sp.opacity = 0.7;
                         characterList[i].top.firstChild.frame = baseFrame+1;
                         characterList[i].top.firstChild.opacity = 0.7;
+                        characterList[i].top.lastChild.opacity = 0.5;
                     }else if(newValue==='moving'){
                         characterList[i].sp.frame = [baseFrame+2,baseFrame+2,baseFrame+3,baseFrame+3,baseFrame+4,baseFrame+4,baseFrame+5,baseFrame+5];
                         characterList[i].sp.opacity = 1;
@@ -308,6 +309,8 @@ window.onload = function(){
             for(let i = 0; i < playerList.length; i++){
                 scene.addChild(playerList[i].sp);
                 scene.addChild(playerList[i].top);
+                if(i === 0) playerList[i].top.lastChild.color = '#000';
+                else if(playerList[i].status === "escape" || playerList[i].status === "moving") playerList[i].top.lastChild.color = '#555';
             };
             let toStudentButton = new Sprite(145, 33);
             toStudentButton.image = core.assets['gameassets/ui/tostudentbutton.png'];
@@ -347,8 +350,11 @@ window.onload = function(){
             for(let i = 0; i < playerList.length; i++){
                 scene.addChild(playerList[i].sp);
                 scene.addChild(playerList[i].top);
-                if(i == 0) continue;
-
+                if(i == 0){
+                    playerList[i].top.lastChild.color = '#555';
+                    continue;
+                }
+                if(playerList[i].status === "escape" || playerList[i].status === "moving") playerList[i].top.lastChild.color = '#000';
                 playerList[i].top.on('touchstart', function(){
                     if(sceneNumber != 4 || playerList[i].status !== 'escape') return;
 
