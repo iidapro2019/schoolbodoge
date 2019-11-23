@@ -126,7 +126,7 @@ window.onload = function(){
                     let _movingCharacter=movingCharacter;
                     if(_movingCharacter.room == room) return;
 
-                    if (sound.src.loop) sound.stop();
+                    if (sound._state) sound.stop();
                     _movingCharacter.room.characters = _movingCharacter.room.characters.filter(n => n !== _movingCharacter);
                     if(sceneNumber == 3 && turn >= 2){
                         room.characters.forEach(chara => { if(chara.status == 'escape' && confirm(`${chara.name}を捕まえます。`)){
@@ -180,7 +180,7 @@ window.onload = function(){
                 sprite.on('touchstart', function(){
                     let _movingCharacter=movingCharacter;
 
-                    if (sound.src.loop) sound.stop();
+                    if (sound._state) sound.stop();
                     if(sceneNumber == 3){
                         return;
                     }else if(sceneNumber == 4){
