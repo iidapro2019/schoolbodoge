@@ -405,8 +405,8 @@ window.onload = function(){
                     e.preventDefault();
                     if(sound._state) return sound.stop();
 
-                    distance = (Math.sqrt(Math.pow(demon.room.world_x-movingCharacter.room.world_x, 2)+Math.pow(demon.room.world_y-movingCharacter.room.world_y, 2))+300*Math.abs(demon.room.floor-movingCharacter.room.floor))*baseDistance;
-                    threeTimesDistance = distance*3;
+                    let distance = (Math.sqrt(Math.pow(demon.room.world_x-movingCharacter.room.world_x, 2)+Math.pow(demon.room.world_y-movingCharacter.room.world_y, 2))+300*Math.abs(demon.room.floor-movingCharacter.room.floor))*baseDistance;
+                    let threeTimesDistance = distance*3;
                     if(threeTimesDistance <= 1) sound = core.assets['gameassets/heartwav/Heart_3.wav'];
                     else if(threeTimesDistance <= 2) sound = core.assets['gameassets/heartwav/Heart_2.wav'];
                     else if(threeTimesDistance <= 3) sound = core.assets['gameassets/heartwav/Heart_1.wav'];
