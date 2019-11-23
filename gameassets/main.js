@@ -423,7 +423,7 @@ window.onload = function(){
             captionLabel.text = 'リザルト';
             captionLabel.font = '60px gameFont';
             captionLabel.textAlign = 'center';
-            captionLabel.color = '#ddd';
+            captionLabel.color = '#ccc';
             let turnResultLabel = new Label();
             turnResultLabel.x = 110;
             turnResultLabel.y = 220;
@@ -431,11 +431,11 @@ window.onload = function(){
             turnResultLabel.width = 400;
             turnResultLabel.text = `経過ターン：${turn}ターン`;
             turnResultLabel.font = '35px gameFont';
-            turnResultLabel.color = 'ddd';
+            turnResultLabel.color = '#ccc';
             let remainingResultLabel = new Label();
             remainingResultLabel.x = 110;
             remainingResultLabel.y = 280;
-            remainingResultLabel.color = 'ddd';
+            remainingResultLabel.color = '#ccc';
             scene.addChild(remainingResultLabel);
             remainingResultLabel.text = `生徒残り数：${playerList.filter(chara => chara.status === 'escape').length}人`;
             remainingResultLabel.font = '35px gameFont';
