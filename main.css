@@ -35,11 +35,14 @@ ul.nav li.game a:hover {
     background-color: #dd0000;
 }
 
-#content{
+#top-content{
     margin: 10px 40px 10px 40px;
     padding: 10px;
 }
 
+#top-content p{
+	padding-left: 15px;
+}
 
 img{
 	width: 100%;
