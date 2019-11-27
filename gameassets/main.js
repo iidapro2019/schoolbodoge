@@ -210,6 +210,9 @@ window.onload = function(){
             gametop.image = core.assets['gameassets/ui/gametop.jpg'];
             scene.addChild(gametop);
             scene.on('touchstart', function(){
+                $(window).on('beforeunload', function(e) {
+                    return 'プレイ中のデータは破棄されます。移動してもよろしいですか?';
+                });
                 core.replaceScene(createSelectScene());
             });
             return scene;
@@ -419,6 +422,7 @@ window.onload = function(){
         };
 
         let createResultScene = function(){
+            $(window).off('beforeunload');
             sceneNumber = 5;
             let scene = new Scene();
             scene.addChild(gameBackgroundImg2);
