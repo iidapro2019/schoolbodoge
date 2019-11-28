@@ -21,7 +21,7 @@
             'gameassets/ui/button.png',
             'gameassets/ui/disableButton.png',
             'gameassets/ui/buttonPushed.png',
-            'gameassets/ui/dialog.png',
+            // 'gameassets/ui/dialog.png',
             // 'gameassets/ui/navigationBar.png'
         ],
         _env: {
