@@ -36,17 +36,37 @@ ul.nav li.game a:hover {
 }
 
 #top-content{
-    margin: 10px 40px 10px 40px;
+    margin: 10px auto;
     padding: 10px;
+	max-width: 1200px;
 }
 
 #top-content p{
 	padding-left: 15px;
 }
 
+#top-content h2{
+	padding-top: 20px;
+}
+
 img{
 	width: 100%;
 	
+}
+
+footer{
+	text-align: center;
+	color: #777;
+	background-color: #eee;
+	padding: 10px 0px 10px;
+}
+
+footer p{
+	margin: 0;
+}
+
+footer a{
+	margin-left: 20px;
 }
 
 /* 以下ゲームページ用 */
