@@ -6,7 +6,7 @@ window.onload = function(){
     let core = new Core(900, 1300);
     let turn = 0;
     let sceneNumber = 0;
-    enchant.widget._env.buttonFont = '23px gameFont'
+    enchant.widget._env.buttonFont = '23px gameFont';
     core.preload(['gameassets/chara/chara.png', 'gameassets/chara/select.png', 'gameassets/mapimage/background.jpg', 'gameassets/mapimage/background2.jpg','gameassets/mapimage/normal_classroom.png', 'gameassets/mapimage/special_classroom.png', 'gameassets/mapimage/corridor.png', 'gameassets/mapimage/escape_exit.png', 'gameassets/ui/gametop.jpg', 'gameassets/ui/nextbutton.png', 'gameassets/ui/todemonbutton.png', 'gameassets/ui/tostudentbutton.png', 'gameassets/heartwav/Heart_1.wav', 'gameassets/heartwav/Heart_2.wav', 'gameassets/heartwav/Heart_3.wav']);
     
     let characterList = [
@@ -45,10 +45,10 @@ window.onload = function(){
     core._pageY = $("#enchant-stage").offset().top;
     core._pageX = left;
     core.onload = function(){
-        core.keybind(49, 'one');
-        core.keybind(50, 'two');
-        core.keybind(51, 'three');
-        core.keybind(52, 'four');
+        core.keybind(49, '1');
+        core.keybind(50, '2');
+        core.keybind(51, '3');
+        core.keybind(52, '4');
         let gameBackgroundImg = new Sprite( 900, 1300 );
         gameBackgroundImg.image = core.assets['gameassets/mapimage/background.jpg'];
         let gameBackgroundImg2 = new Sprite( 900, 1300 );
@@ -398,50 +398,23 @@ window.onload = function(){
             scene.addChild(corridors);
 
             scene.addEventListener('enterframe', function(e) {
-                if (core.input.one && playerList[1].status === "escape"){
-                    changeMovingCharacter(playerList[1]);
-                    if(sound._state) sound.stop();
-                }
-                if (core.input.two && playerList[2].status === "escape"){
-                    changeMovingCharacter(playerList[2]);
-                     if(sound._state) sound.stop();
-                }
-                if (core.input.three && playerList[3].status === "escape"){
-                    changeMovingCharacter(playerList[3]);
-                    if(sound._state) sound.stop();
-                }
-                if (core.input.four && playerList.length===5 && playerList[4].status === "escape"){
-                    changeMovingCharacter(playerList[4]);
-                    if(sound._state) sound.stop();
+                for(let i = 1; i < playerList.length; i++){
+                    if (core.input[i] && playerList[i].status === "escape"){
+                        changeMovingCharacter(playerList[i]);
+                        if(sound._state) sound.stop();
+                    }
                 }
             });
 
             playHeartButton.addEventListener('touchstart', function(e){
-                if(sceneNumber === 4){
-                    if(sound._state) return sound.stop();
-
-                    let distance = (Math.sqrt(Math.pow(demon.room.world_x-movingCharacter.room.world_x, 2)+Math.pow(demon.room.world_y-movingCharacter.room.world_y, 2))+300*Math.abs(demon.room.floor-movingCharacter.room.floor))*baseDistance;
-                    let threeTimesDistance = distance*3;
-                    if(threeTimesDistance <= 1) sound = core.assets['gameassets/heartwav/Heart_3.wav'];
-                    else if(threeTimesDistance <= 2) sound = core.assets['gameassets/heartwav/Heart_2.wav'];
-                    else if(threeTimesDistance <= 3) sound = core.assets['gameassets/heartwav/Heart_1.wav'];
-                    sound.play();
-                    sound.src.loop = true;
-                }
+                heartSoundSwitching();
             });
+
             $(window).off('keydown.space');
             $(window).on('keydown.space', function(e){
                 if(e.keyCode === 32 && sceneNumber === 4){
                     e.preventDefault();
-                    if(sound._state) return sound.stop();
-
-                    let distance = (Math.sqrt(Math.pow(demon.room.world_x-movingCharacter.room.world_x, 2)+Math.pow(demon.room.world_y-movingCharacter.room.world_y, 2))+300*Math.abs(demon.room.floor-movingCharacter.room.floor))*baseDistance;
-                    let threeTimesDistance = distance*3;
-                    if(threeTimesDistance <= 1) sound = core.assets['gameassets/heartwav/Heart_3.wav'];
-                    else if(threeTimesDistance <= 2) sound = core.assets['gameassets/heartwav/Heart_2.wav'];
-                    else if(threeTimesDistance <= 3) sound = core.assets['gameassets/heartwav/Heart_1.wav'];
-                    sound.play();
-                    sound.src.loop = true;
+                    heartSoundSwitching();
                 }
             });
 
@@ -523,6 +496,18 @@ window.onload = function(){
             movingCharacterLabel.text = `操作キャラ：${movingCharacter.name}`;
             selectFrame.x = movingCharacter.top.firstChild.x;
             selectFrame.y = movingCharacter.top.firstChild.y;
+        }
+
+        function heartSoundSwitching(){
+            if(sound._state) return sound.stop();
+
+            let distance = (Math.sqrt(Math.pow(demon.room.world_x-movingCharacter.room.world_x, 2)+Math.pow(demon.room.world_y-movingCharacter.room.world_y, 2))+300*Math.abs(demon.room.floor-movingCharacter.room.floor))*baseDistance;
+            let threeTimesDistance = distance*3;
+            if(threeTimesDistance <= 1) sound = core.assets['gameassets/heartwav/Heart_3.wav'];
+            else if(threeTimesDistance <= 2) sound = core.assets['gameassets/heartwav/Heart_2.wav'];
+            else if(threeTimesDistance <= 3) sound = core.assets['gameassets/heartwav/Heart_1.wav'];
+            sound.play();
+            sound.src.loop = true;
         }
 
         core.replaceScene(createTitleScene());
