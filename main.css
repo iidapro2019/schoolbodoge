@@ -54,16 +54,29 @@ img.background-color{
 	
 }
 
+div.characters{
+	display: flex;
+	flex-direction: column;
+	padding-left: 7px;
+}
+
+div.charainfo ruby{
+	font-weight: bold;
+}
 img.charaimg{
 	width: 130px;
-	/* height: 30px; */
+	border: thick double #777;
+	margin-bottom: 20px;
+	margin-right: 8px;
+    float: left;
+    display: block;
 }
 
 footer{
 	text-align: center;
 	color: #777;
 	background-color: #eee;
-	padding: 10px 0px 10px;
+	padding: 20px 0px 20px;
 }
 
 footer p{
