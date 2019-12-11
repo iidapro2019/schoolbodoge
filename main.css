@@ -49,9 +49,14 @@ ul.nav li.game a:hover {
 	padding-top: 20px;
 }
 
-img{
+img.background-color{
 	width: 100%;
 	
+}
+
+img.charaimg{
+	width: 130px;
+	/* height: 30px; */
 }
 
 footer{
