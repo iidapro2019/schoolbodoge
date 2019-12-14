@@ -2,12 +2,19 @@
 
 enchant();
 
-window.onload = function(){
+window.onload = function gameFnc(){
     let core = new Core(900, 1300);
     let turn = 0;
     let sceneNumber = 0;
-    let hearingAidMode = false;
+    var hearingAidMode = false;
+    let hearingAidLabel = new Label();
     enchant.widget._env.buttonFont = '23px gameFont';
+    let playHeartButton = new enchant.widget.Button("心音");
+    let hearingAidButton = new enchant.widget.Button("聴診器");
+    playHeartButton.x = 822;
+    playHeartButton.y = 150;
+    hearingAidButton.x = 822;
+    hearingAidButton.y = 95;
     core.preload(['gameassets/chara/chara.png', 'gameassets/chara/select.png', 'gameassets/mapimage/background.jpg', 'gameassets/mapimage/background2.jpg','gameassets/mapimage/normal_classroom.png', 'gameassets/mapimage/special_classroom.png', 'gameassets/mapimage/corridor.png', 'gameassets/mapimage/escape_exit.png', 'gameassets/ui/gametop.jpg', 'gameassets/ui/nextbutton.png', 'gameassets/ui/todemonbutton.png', 'gameassets/ui/tostudentbutton.png', 'gameassets/heartwav/Heart_1.wav', 'gameassets/heartwav/Heart_2.wav', 'gameassets/heartwav/Heart_3.wav']);
     
     let characterList = [
@@ -327,13 +334,7 @@ window.onload = function(){
                 demon.top.firstChild.frame = 24;
                 core.replaceScene(createStudentPhaseScene());
             });
-            let playHeartButton = new enchant.widget.Button("心音");
-            playHeartButton.x = 822;
-            playHeartButton.y = 150;
             scene.addChild(playHeartButton);
-            let hearingAidButton = new enchant.widget.Button("聴診器");
-            hearingAidButton.x = 822;
-            hearingAidButton.y = 95
             scene.addChild(hearingAidButton);
             let bg1 = new enchant.widget.Ninepatch(enchant.widget._env.buttonWidth, enchant.widget._env.buttonHeight);
             bg1.src = core.assets['gameassets/ui/disableButton.png'];
@@ -378,7 +379,6 @@ window.onload = function(){
                     if(sceneNumber != 4 || playerList[i].status !== 'escape') return;
 
                     changeMovingCharacter(playerList[i]);
-                    changeHearingAidMode(false);
                     if(sound._state) sound.stop();
                 });
             };
@@ -398,20 +398,19 @@ window.onload = function(){
                     core.replaceScene(createDemonPhaseScene());
                 }
             });
-            let playHeartButton = new enchant.widget.Button("心音");
+            playHeartButton = new enchant.widget.Button("心音");
+            hearingAidButton = new enchant.widget.Button("聴診器");
             playHeartButton.x = 822;
             playHeartButton.y = 150;
+            hearingAidButton.x = 822;
+            hearingAidButton.y = 95;
             scene.addChild(playHeartButton);
-            let hearingAidLabel = new Label();
             hearingAidLabel.text = 'OFF';
             hearingAidLabel.font = '20px gameFont';
             hearingAidLabel.color = 'red';
             hearingAidLabel.x = 822;
             hearingAidLabel.y = 130;
             scene.addChild(hearingAidLabel);
-            let hearingAidButton = new enchant.widget.Button("聴診器");
-            hearingAidButton.x = 822;
-            hearingAidButton.y = 95
             scene.addChild(hearingAidButton);
             scene.addChild(map);
             scene.addChild(floorLabels);
@@ -421,7 +420,6 @@ window.onload = function(){
                 for(let i = 1; i < playerList.length; i++){
                     if (core.input[i] && playerList[i].status === "escape"){
                         changeMovingCharacter(playerList[i]);
-                        changeHearingAidMode(false);
                         if(sound._state) sound.stop();
                     }
                 }
@@ -444,18 +442,6 @@ window.onload = function(){
                 }
             });
             
-            function changeHearingAidMode(bool){
-                hearingAidMode = bool;
-                if(bool){
-                    hearingAidLabel.text = 'ON';
-                    hearingAidLabel.color = 'green';
-
-                }else{
-                    hearingAidLabel.text = 'OFF';
-                    hearingAidLabel.color = 'red';
-                }
-
-            }
             
 
             return scene;
@@ -532,6 +518,7 @@ window.onload = function(){
         function changeMovingCharacter(chara){
             if(movingCharacter.status === 'moving') movingCharacter.status = 'escape';
             if(chara.status === 'escape') chara.status = 'moving';
+            if(sceneNumber == 4) changeHearingAidMode(false);
             movingCharacter = chara;
             movingCharacterLabel.text = `操作キャラ：${movingCharacter.name}`;
             selectFrame.x = movingCharacter.top.firstChild.x;
@@ -555,6 +542,19 @@ window.onload = function(){
             }
             sound.play();
             sound.src.loop = true;
+        }
+
+        function changeHearingAidMode(bool){
+            hearingAidMode = bool;
+            if(bool){
+                hearingAidLabel.text = 'ON';
+                hearingAidLabel.color = 'green';
+
+            }else{
+                hearingAidLabel.text = 'OFF';
+                hearingAidLabel.color = 'red';
+            }
+
         }
 
         core.replaceScene(createTitleScene());
