@@ -36,8 +36,10 @@ ul.nav li.game a:hover {
 }
 
 #top-content{
-    margin: 10px auto;
-    padding: 10px;
+	margin: 10px auto;
+	margin-top: 0;
+	padding: 10px;
+	padding-top: 0;
 	max-width: 1200px;
 }
 
@@ -49,9 +51,32 @@ ul.nav li.game a:hover {
 	padding-top: 20px;
 }
 
-img.background-color{
+#top-summary{
+	position: relative;
+}
+
+#top-summary p{
+	position: absolute;
+	bottom: 13%;
+	padding: 0 20%;
+	color: white;
+	text-shadow: 0 2px 4px #000;
+}
+
+#top-image img{
 	width: 100%;
-	
+	pointer-events: none;
+	object-fit: contain;
+}
+
+#toplogo{
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin: auto;
+	top: 6%;
+	height: 55%;
+	object-fit: contain;
 }
 
 div.characters{
@@ -85,6 +110,26 @@ footer p{
 
 footer a{
 	margin-left: 20px;
+}
+
+@media screen and (max-width: 1000px) {
+	#top-summary p{
+		margin: 10px auto;
+		padding: 10px 20px 10px 25px;
+		max-width: 1200px;
+		position: static;
+		color: black;
+		text-shadow: none;
+	}
+	#top-image{
+		position: relative;
+	}
+	#top-image img#toplogo{
+		position: absolute;
+		top: 0;
+		height: 90%;
+		width: auto;
+	}
 }
 
 /* 以下ゲームページ用 */
