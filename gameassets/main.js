@@ -378,6 +378,7 @@ window.onload = function(){
                     if(sceneNumber != 4 || playerList[i].status !== 'escape') return;
 
                     changeMovingCharacter(playerList[i]);
+                    changeHearingAidMode(false);
                     if(sound._state) sound.stop();
                 });
             };
@@ -445,8 +446,14 @@ window.onload = function(){
             
             function changeHearingAidMode(bool){
                 hearingAidMode = bool;
-                hearingAidLabel.text = bool ? 'ON' : 'OFF';
-                hearingAidLabel.color = 'green';
+                if(bool){
+                    hearingAidLabel.text = 'ON';
+                    hearingAidLabel.color = 'green';
+
+                }else{
+                    hearingAidLabel.text = 'OFF';
+                    hearingAidLabel.color = 'red';
+                }
 
             }
             
