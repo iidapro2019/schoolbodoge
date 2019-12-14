@@ -6,6 +6,7 @@ window.onload = function(){
     let core = new Core(900, 1300);
     let turn = 0;
     let sceneNumber = 0;
+    let hearingAidMode = false;
     enchant.widget._env.buttonFont = '23px gameFont';
     core.preload(['gameassets/chara/chara.png', 'gameassets/chara/select.png', 'gameassets/mapimage/background.jpg', 'gameassets/mapimage/background2.jpg','gameassets/mapimage/normal_classroom.png', 'gameassets/mapimage/special_classroom.png', 'gameassets/mapimage/corridor.png', 'gameassets/mapimage/escape_exit.png', 'gameassets/ui/gametop.jpg', 'gameassets/ui/nextbutton.png', 'gameassets/ui/todemonbutton.png', 'gameassets/ui/tostudentbutton.png', 'gameassets/heartwav/Heart_1.wav', 'gameassets/heartwav/Heart_2.wav', 'gameassets/heartwav/Heart_3.wav']);
     
@@ -328,12 +329,18 @@ window.onload = function(){
             });
             let playHeartButton = new enchant.widget.Button("心音");
             playHeartButton.x = 822;
-            playHeartButton.y = 95;
+            playHeartButton.y = 150;
             scene.addChild(playHeartButton);
+            let hearingAidButton = new enchant.widget.Button("聴診器");
+            hearingAidButton.x = 822;
+            hearingAidButton.y = 95
+            scene.addChild(hearingAidButton);
             let bg1 = new enchant.widget.Ninepatch(enchant.widget._env.buttonWidth, enchant.widget._env.buttonHeight);
             bg1.src = core.assets['gameassets/ui/disableButton.png'];
             playHeartButton.image = bg1;
             playHeartButton.pushedimage = bg1;
+            hearingAidButton.image = bg1;
+            hearingAidButton.pushedimage = bg1;
             scene.addChild(selectFrame);
             changeMovingCharacter(demon);
             scene.addChild(map);
@@ -371,6 +378,7 @@ window.onload = function(){
                     if(sceneNumber != 4 || playerList[i].status !== 'escape') return;
 
                     changeMovingCharacter(playerList[i]);
+                    changeHearingAidMode(false);
                     if(sound._state) sound.stop();
                 });
             };
@@ -382,6 +390,7 @@ window.onload = function(){
             scene.addChild(toDemonButton);
             toDemonButton.on('touchstart', function(){
                 if(sound._state) sound.stop();
+                changeHearingAidMode(false);
                 if(turn === 14){
                     alert("14ターンが経過しました。ゲームを終了します。");
                     core.replaceScene(createResultScene());
@@ -391,8 +400,19 @@ window.onload = function(){
             });
             let playHeartButton = new enchant.widget.Button("心音");
             playHeartButton.x = 822;
-            playHeartButton.y = 95;
+            playHeartButton.y = 150;
             scene.addChild(playHeartButton);
+            let hearingAidLabel = new Label();
+            hearingAidLabel.text = 'OFF';
+            hearingAidLabel.font = '20px gameFont';
+            hearingAidLabel.color = 'red';
+            hearingAidLabel.x = 822;
+            hearingAidLabel.y = 130;
+            scene.addChild(hearingAidLabel);
+            let hearingAidButton = new enchant.widget.Button("聴診器");
+            hearingAidButton.x = 822;
+            hearingAidButton.y = 95
+            scene.addChild(hearingAidButton);
             scene.addChild(map);
             scene.addChild(floorLabels);
             scene.addChild(corridors);
@@ -401,6 +421,7 @@ window.onload = function(){
                 for(let i = 1; i < playerList.length; i++){
                     if (core.input[i] && playerList[i].status === "escape"){
                         changeMovingCharacter(playerList[i]);
+                        changeHearingAidMode(false);
                         if(sound._state) sound.stop();
                     }
                 }
@@ -410,6 +431,11 @@ window.onload = function(){
                 heartSoundSwitching();
             });
 
+            hearingAidButton.addEventListener('touchstart', function(e){
+                if(sound._state) sound.stop();
+
+                changeHearingAidMode(!hearingAidMode);
+            });
             $(window).off('keydown.space');
             $(window).on('keydown.space', function(e){
                 if(e.keyCode === 32 && sceneNumber === 4){
@@ -417,6 +443,20 @@ window.onload = function(){
                     heartSoundSwitching();
                 }
             });
+            
+            function changeHearingAidMode(bool){
+                hearingAidMode = bool;
+                if(bool){
+                    hearingAidLabel.text = 'ON';
+                    hearingAidLabel.color = 'green';
+
+                }else{
+                    hearingAidLabel.text = 'OFF';
+                    hearingAidLabel.color = 'red';
+                }
+
+            }
+            
 
             return scene;
         };
@@ -502,10 +542,17 @@ window.onload = function(){
             if(sound._state) return sound.stop();
 
             let distance = (Math.sqrt(Math.pow(demon.room.world_x-movingCharacter.room.world_x, 2)+Math.pow(demon.room.world_y-movingCharacter.room.world_y, 2))+300*Math.abs(demon.room.floor-movingCharacter.room.floor))*baseDistance;
-            let threeTimesDistance = distance*3;
-            if(threeTimesDistance <= 1) sound = core.assets['gameassets/heartwav/Heart_3.wav'];
-            else if(threeTimesDistance <= 2) sound = core.assets['gameassets/heartwav/Heart_2.wav'];
-            else if(threeTimesDistance <= 3) sound = core.assets['gameassets/heartwav/Heart_1.wav'];
+            if(hearingAidMode === false){
+                let threeTimesDistance = distance*3;
+                if(threeTimesDistance <= 1) sound = core.assets['gameassets/heartwav/Heart_3.wav'];
+                else if(threeTimesDistance <= 2) sound = core.assets['gameassets/heartwav/Heart_2.wav'];
+                else if(threeTimesDistance <= 3) sound = core.assets['gameassets/heartwav/Heart_1.wav'];
+            }else{
+                let sixTimesDistance = distance*6;
+                if(sixTimesDistance <= 1) sound = core.assets['gameassets/heartwav/Heart_3.wav'];
+                else if(sixTimesDistance <= 3) sound = core.assets['gameassets/heartwav/Heart_2.wav'];
+                else if(sixTimesDistance <= 6) sound = core.assets['gameassets/heartwav/Heart_1.wav'];
+            }
             sound.play();
             sound.src.loop = true;
         }
